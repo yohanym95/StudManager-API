@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "p3f+eYvRm3MpRj6PSQX5NxJAj+zyLNCcbvDsEh3S7lu7oy9cSde/9CARg9FxebF+LJF0VUlknSLihfHYKo7Dfw==",
+  "dgSpecHash": "dg7iMD7W2aMtTLQt5qHE5vSPCAVwwA4WID63YzZI+S5ZtdSgrZmUq0w6VQM7bQwgFhUhWjVdQ2FID4tkn8CVKA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager\\StudManager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.6\\microsoft.aspnetcore.cryptography.internal.5.0.6.nupkg.sha512",
+    "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.6\\microsoft.aspnetcore.cryptography.keyderivation.5.0.6.nupkg.sha512",
+    "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\5.0.6\\microsoft.aspnetcore.identity.entityframeworkcore.5.0.6.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.15\\microsoft.aspnetcore.jsonpatch.3.1.15.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\3.1.15\\microsoft.aspnetcore.mvc.newtonsoftjson.3.1.15.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
@@ -22,6 +25,8 @@
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.extensions.identity.core\\5.0.6\\microsoft.extensions.identity.core.5.0.6.nupkg.sha512",
+    "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.extensions.identity.stores\\5.0.6\\microsoft.extensions.identity.stores.5.0.6.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.extensions.logging\\5.0.0\\microsoft.extensions.logging.5.0.0.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\5.0.0\\microsoft.extensions.logging.abstractions.5.0.0.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.extensions.options\\5.0.0\\microsoft.extensions.options.5.0.0.nupkg.sha512",
