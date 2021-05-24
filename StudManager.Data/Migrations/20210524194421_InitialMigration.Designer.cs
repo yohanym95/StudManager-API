@@ -10,8 +10,8 @@ using StudManager.Data.Context;
 namespace StudManager.Data.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20210519071057_InitialMigrations")]
-    partial class InitialMigrations
+    [Migration("20210524194421_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,6 +152,34 @@ namespace StudManager.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Admin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AdminRegNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId")
+                        .IsUnique()
+                        .HasFilter("[AdminId] IS NOT NULL");
+
+                    b.ToTable("Admin");
+                });
+
             modelBuilder.Entity("StudManager.Data.Data.Entities.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -231,8 +259,10 @@ namespace StudManager.Data.Migrations
 
             modelBuilder.Entity("StudManager.Data.Data.Entities.Student", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -240,13 +270,17 @@ namespace StudManager.Data.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("StudRegNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Students");
                 });
@@ -302,20 +336,29 @@ namespace StudManager.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Admin", b =>
+                {
+                    b.HasOne("StudManager.Data.Data.Entities.ApplicationUser", "ApplicationUser")
+                        .WithOne("Admin")
+                        .HasForeignKey("StudManager.Data.Data.Entities.Admin", "AdminId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("StudManager.Data.Data.Entities.Student", b =>
                 {
                     b.HasOne("StudManager.Data.Data.Entities.ApplicationUser", "ApplicationUser")
-                        .WithOne("student")
-                        .HasForeignKey("StudManager.Data.Data.Entities.Student", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("Student")
+                        .HasForeignKey("StudManager.Data.Data.Entities.Student", "UserId");
 
                     b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("StudManager.Data.Data.Entities.ApplicationUser", b =>
                 {
-                    b.Navigation("student");
+                    b.Navigation("Admin");
+
+                    b.Navigation("Student");
                 });
 #pragma warning restore 612, 618
         }

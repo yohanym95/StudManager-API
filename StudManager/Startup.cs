@@ -8,11 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using StudManager.Data.Context;
 using StudManager.Data.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace StudManager
@@ -33,7 +36,8 @@ namespace StudManager
             {
                 cfg.User.RequireUniqueEmail = true;
             })
-             .AddEntityFrameworkStores<DBContext>();
+             .AddEntityFrameworkStores<DBContext>()
+             .AddDefaultTokenProviders();
 
             services.AddDbContext<DBContext>(options =>
             {
@@ -41,7 +45,21 @@ namespace StudManager
                     assembly => assembly.MigrationsAssembly(typeof(DBContext).Assembly.FullName));
             });
 
-            services.AddMvc().AddNewtonsoftJson();
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidAudience = Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                    };
+                });
+
+            services.AddMvc().AddNewtonsoftJson(CFG => CFG.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddControllers();
         }
 
@@ -57,11 +75,14 @@ namespace StudManager
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute("Default",
+                    "{controller}/{action}/{id?}",
+                    new { controller = "App", action = "Index" });
             });
         }
     }

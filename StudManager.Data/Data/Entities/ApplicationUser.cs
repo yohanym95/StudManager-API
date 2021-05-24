@@ -11,6 +11,7 @@ namespace StudManager.Data.Data.Entities
         public string LastName { get; set; }
         public string BirthDate { get; set; }
         public string UserType { get; set; }
-        public virtual Student student { get; set; }
+        public virtual Student Student { get; set; }
+        public virtual Admin Admin { get; set; }
     }
 }

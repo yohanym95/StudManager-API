@@ -6,14 +6,14 @@ using System.Text;
 
 namespace StudManager.Data.Data.Entities
 {
-    public class Student
+    public class Admin
     {
         public int Id { get; set; }
-        public string StudRegNo { get; set; }
+        public string AdminRegNo { get; set; }
         public string FullName { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
         [ForeignKey("ApplicationUser")]
-        public string UserId { get; set; }
+        public string AdminId { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }
