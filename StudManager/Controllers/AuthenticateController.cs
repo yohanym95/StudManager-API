@@ -6,11 +6,11 @@ using Microsoft.IdentityModel.Tokens;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
 using StudManager.Data.Models;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +31,11 @@ namespace StudManager.Controllers
             _userManager = userManager;
         }
 
+        /// <summary>
+        ///     login for user
+        /// </summary>
+        /// <response code="401">Unauthorized access</response>
+        [SwaggerOperation(Summary = "This endpoint use for login process by creating the token")]
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
@@ -77,7 +82,11 @@ namespace StudManager.Controllers
 
         }
 
-
+        /// <summary>
+        ///     create account for student
+        /// </summary>
+        /// <response code="401">Unauthorized access</response>
+        [SwaggerOperation(Summary = "This endpoint use for create account to student")]
         [HttpPost]
         [Route("register/student")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
@@ -129,7 +138,11 @@ namespace StudManager.Controllers
             return Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
         }
 
-
+        /// <summary>
+        ///     create account for admin
+        /// </summary>
+        /// <response code="401">Unauthorized access</response>
+        [SwaggerOperation(Summary = "This endpoint use for create account to admin")]
         [HttpPost]
         [Route("register/admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
