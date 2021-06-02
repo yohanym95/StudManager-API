@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace StudManager.Controllers.Admin
 {
+   // [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[Controller]")]
     [ApiController]
     public class AdminController : Controller

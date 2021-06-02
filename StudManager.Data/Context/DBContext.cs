@@ -14,6 +14,7 @@ namespace StudManager.Data.Context
         }
 
         public DbSet<Student> Students { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
