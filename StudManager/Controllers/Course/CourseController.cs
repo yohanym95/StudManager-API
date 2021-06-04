@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudManager.Data.Data.Entities;
+using StudManager.Data.Data.Roles;
 using StudManager.Data.Models;
 using StudManager.Data.Services;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,7 @@ namespace StudManager.Controllers.Courses
 {
     [Route("api/[Controller]")]
     [ApiController]
-  //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _course;
@@ -24,7 +26,9 @@ namespace StudManager.Controllers.Courses
             _course = course;
         }
 
+        [SwaggerOperation(Summary = "This endpoint use for get all courses")]
         [HttpGet]
+        [Authorize(Roles = UserRoles.Admin)]
         public IActionResult Get()
         {
             try
@@ -43,7 +47,9 @@ namespace StudManager.Controllers.Courses
             }
         }
 
+        [SwaggerOperation(Summary = "This endpoint use for create course")]
         [HttpPost]
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Post([FromBody] CourseModel model)
         {
             try

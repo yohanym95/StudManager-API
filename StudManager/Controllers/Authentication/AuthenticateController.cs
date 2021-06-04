@@ -20,7 +20,7 @@ namespace StudManager.Controllers.Authentication
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuraion;
-        public AuthenticateController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthenticateController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
         {
             _configuraion = configuration;
             _userManager = userManager;
