@@ -14,10 +14,12 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using StudManager.Data.Context;
 using StudManager.Data.Data.Entities;
+using StudManager.Data.Services;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,6 +49,11 @@ namespace StudManager
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                     assembly => assembly.MigrationsAssembly(typeof(DBContext).Assembly.FullName));
             });
+
+
+            services.AddScoped<ICourseService, CourseServices>();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddAuthentication()
                 .AddCookie()

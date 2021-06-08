@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudManager.Data.Data.Entities;
@@ -20,10 +21,12 @@ namespace StudManager.Controllers.Courses
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _course;
+        private readonly IMapper _mapper;
 
-        public CourseController(ICourseService course)
+        public CourseController(ICourseService course, IMapper mapper)
         {
             _course = course;
+            _mapper = mapper;
         }
 
         [SwaggerOperation(Summary = "This endpoint use for get all courses")]
@@ -63,11 +66,13 @@ namespace StudManager.Controllers.Courses
                         CourseNo = model.CourseNo
                     };
 
-                    _course.AddCourse(newCourse);
+                    var course = _mapper.Map<Course>(model);
+
+                    _course.AddCourse(course);
 
                     if (_course.SaveAll())
                     {
-                        return Ok(newCourse);
+                        return Ok(course);
                     }
                 }
                 else
