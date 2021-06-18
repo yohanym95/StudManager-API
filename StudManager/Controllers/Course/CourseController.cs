@@ -85,5 +85,39 @@ namespace StudManager.Controllers.Courses
             }
             return BadRequest("Failed to Saved New Course Module");
         }
+
+        [SwaggerOperation(Summary = "This endpoint use for update course")]
+        [HttpPut]
+        [Authorize(Roles = UserRoles.User)]
+        public async Task<IActionResult> Update([FromBody] CourseModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var newCourse = new Course()
+                    {
+                        CourseName = model.CourseName,
+                        Qualifications = model.Qualifications,
+                        CourseNo = model.CourseNo
+                    };
+
+                    var course = _mapper.Map<Course>(model);
+
+                    _course.UpdateCourse(course);
+
+                    return Ok(course);
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+            return BadRequest("Failed to Saved New Course Module");
+        }
     }
 }

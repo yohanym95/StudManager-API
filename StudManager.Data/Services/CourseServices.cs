@@ -29,5 +29,14 @@ namespace StudManager.Data.Services
         {
             return _context.SaveChanges() > 0;
         }
+
+        public void UpdateCourse(Course model)
+        {
+            var course = _context.Courses.FirstOrDefault(C => C.CourseId == model.CourseId);
+
+            course = model;
+
+            _context.SaveChanges();
+        }
     }
 }
