@@ -67,7 +67,7 @@ namespace StudManager.Controllers.Students
                 if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                     await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-                if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+                if (user.UserType == "User" && await _roleManager.RoleExistsAsync(UserRoles.User))
                 {
                     await _userManager.AddToRoleAsync(user, UserRoles.User);
                 }
@@ -143,63 +143,40 @@ namespace StudManager.Controllers.Students
             return Ok(new ResponseModel { Status = "Success", Message = "User updated successfully!" });
         }
 
-        ///// <summary>
-        /////     update account for student
-        ///// </summary>
-        ///// <response code="401">Unauthorized access</response>
-        //[SwaggerOperation(Summary = "This endpoint use for update student account")]
-        //[HttpPut]
-        //[Route("update")]
-        //[Authorize(Roles = UserRoles.User)]
-        //public async Task<IActionResult> UpdatePassword([FromBody] String Password)
-        //{
-        //    try
-        //    {
-        //        var userExists = await _userManager.FindByNameAsync(model.UserName);
-        //        if (userExists != null)
-        //            return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student already exists!" });
+        /// <summary>
+        ///     update student password
+        /// </summary>
+        /// <response code="401">Unauthorized access</response>
+        [SwaggerOperation(Summary = "This endpoint use for update student account")]
+        [HttpPut]
+        [Route("update/password")]
+        [Authorize(Roles = UserRoles.User)]
+        public async Task<IActionResult> UpdatePassword([FromBody] PasswordModel model)
+        {
+            try
+            {
+                var userExists = await _userManager.FindByNameAsync(model.username);
+                if (userExists == null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student already exists!" });
 
-        //        ApplicationUser user = new ApplicationUser()
-        //        {
-        //            FirstName = model.FirstName,
-        //            LastName = model.LastName,
-        //            BirthDate = model.BirthDate,
-        //            PhoneNumber = model.PhoneNumber,
-        //            Email = model.Email,
-        //            SecurityStamp = Guid.NewGuid().ToString(),
-        //            UserName = model.UserName,
-        //            UserType = model.UserType,
-        //            Student = new Student
-        //            {
-        //                StudRegNo = model.StudentRegisterNo,
-        //                FullName = model.FirstName + " " + model.LastName,
-        //            }
+                ApplicationUser user = userExists;
 
-        //        };
-        //        var result = await _userManager.UpdateAsync(user);
+                var result = await _userManager.ChangePasswordAsync(user, model.CurrentPasssword, model.NewPassword);
 
 
-        //        if (!result.Succeeded)
-        //            return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student update process failed! Please check user details and try again." });
+                if (!result.Succeeded)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Update password process is failed! Please check user details and try again." });
 
-        //        if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-        //            await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-        //        if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-        //            await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+            
 
-        //        if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-        //        {
-        //            await _userManager.AddToRoleAsync(user, UserRoles.User);
-        //        }
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return BadRequest(e);
-        //    }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
 
 
-        //    return Ok(new ResponseModel { Status = "Success", Message = "User updated successfully!" });
-        //}
+            return Ok(new ResponseModel { Status = "Success", Message = "Password updated successfully!" });
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace StudManager.Data.Services
 
         public IEnumerable<Course> GetAllCourse()
         {
-            return _context.Courses.OrderBy(c => c.CourseId).ToList();
+            return _context.Courses.OrderBy(c => c.Id).ToList();
         }
 
         public bool SaveAll()
@@ -30,13 +30,17 @@ namespace StudManager.Data.Services
             return _context.SaveChanges() > 0;
         }
 
-        public void UpdateCourse(Course model)
+        public async void UpdateCourse(Course model)
         {
-            var course = _context.Courses.FirstOrDefault(C => C.CourseId == model.CourseId);
+            var course = _context.Courses.FirstOrDefault(C => C.Id == model.Id);
 
-            course = model;
+            if (course == null) throw new Exception("Course record is not found");
 
-            _context.SaveChanges();
+            course.CourseName = model.CourseName;
+            course.CourseNo = model.CourseNo;
+            course.Qualifications = model.Qualifications;
+            //_context.Update(course);
+            await _context.SaveChangesAsync(); 
         }
     }
 }

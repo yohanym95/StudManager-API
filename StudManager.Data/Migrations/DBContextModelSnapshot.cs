@@ -257,8 +257,10 @@ namespace StudManager.Data.Migrations
 
             modelBuilder.Entity("StudManager.Data.Data.Entities.Course", b =>
                 {
-                    b.Property<string>("CourseId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CourseName")
                         .HasColumnType("nvarchar(max)");
@@ -269,7 +271,7 @@ namespace StudManager.Data.Migrations
                     b.Property<string>("Qualifications")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CourseId");
+                    b.HasKey("Id");
 
                     b.ToTable("Courses");
                 });

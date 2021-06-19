@@ -7,7 +7,7 @@ namespace StudManager.Data.Models
 {
     public class CourseModel
     {
-        public string CourseId { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "Course Name Required")]
         public string CourseName { get; set; }
         public string Qualifications { get; set; }

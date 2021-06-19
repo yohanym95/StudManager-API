@@ -12,7 +12,7 @@ namespace StudManager.Data.Mappers
         public MapProfiles()
         {
             CreateMap<Course, CourseModel>()
-                .ForMember( o => o.CourseId, opt => opt.MapFrom(src => 0))
+                .ForMember( o => o.Id, opt => opt.MapFrom(src => 0))
                  .ReverseMap();
         }
     }

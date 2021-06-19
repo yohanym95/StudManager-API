@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StudManager.Data.Data.Entities;
@@ -29,7 +30,8 @@ namespace StudManager.Controllers.Admin
         /// <response code="401">Unauthorized access</response>
         [SwaggerOperation(Summary = "This endpoint use for create account to admin")]
         [HttpPost]
-        [Route("register/admin")]
+        [Route("register")]
+        [Authorize(Roles = UserRoles.SuperAdmin)]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.UserName);
@@ -57,7 +59,7 @@ namespace StudManager.Controllers.Admin
             if (!await _roleManager.RoleExistsAsync(UserRoles.User))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
 
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (user.UserType == "Admin" && await _roleManager.RoleExistsAsync(UserRoles.Admin))
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.Admin);
             }

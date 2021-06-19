@@ -37,14 +37,15 @@ namespace StudManager.Controllers.Courses
             try
             {
                 var courses = _course.GetAllCourse();
-                
-                if(courses.Count() > 0)
+
+                if (courses.Count() > 0)
                 {
                     return Ok(courses);
                 }
                 return BadRequest("There is no courses");
 
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return BadRequest(e);
             }
@@ -79,7 +80,8 @@ namespace StudManager.Controllers.Courses
                 {
                     return BadRequest(ModelState);
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 return BadRequest(e);
             }
@@ -117,7 +119,9 @@ namespace StudManager.Controllers.Courses
             {
                 return BadRequest(e);
             }
+
             return BadRequest("Failed to Saved New Course Module");
         }
     }
 }
+

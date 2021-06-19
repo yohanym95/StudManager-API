@@ -54,14 +54,15 @@ namespace StudManager.Data.Migrations
                 name: "Courses",
                 columns: table => new
                 {
-                    CourseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CourseName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Qualifications = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CourseNo = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.CourseId);
+                    table.PrimaryKey("PK_Courses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(

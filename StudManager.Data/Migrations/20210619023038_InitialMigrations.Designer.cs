@@ -10,7 +10,7 @@ using StudManager.Data.Context;
 namespace StudManager.Data.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20210604053232_InitialMigrations")]
+    [Migration("20210619023038_InitialMigrations")]
     partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -259,8 +259,10 @@ namespace StudManager.Data.Migrations
 
             modelBuilder.Entity("StudManager.Data.Data.Entities.Course", b =>
                 {
-                    b.Property<string>("CourseId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CourseName")
                         .HasColumnType("nvarchar(max)");
@@ -271,7 +273,7 @@ namespace StudManager.Data.Migrations
                     b.Property<string>("Qualifications")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CourseId");
+                    b.HasKey("Id");
 
                     b.ToTable("Courses");
                 });
