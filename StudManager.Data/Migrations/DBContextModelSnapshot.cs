@@ -276,12 +276,36 @@ namespace StudManager.Data.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Fees", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AmountofFees")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateofReceipt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RecieptNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fees");
+                });
+
             modelBuilder.Entity("StudManager.Data.Data.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -296,6 +320,9 @@ namespace StudManager.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId")
+                        .IsUnique();
 
                     b.HasIndex("UserId")
                         .IsUnique()
@@ -366,6 +393,12 @@ namespace StudManager.Data.Migrations
 
             modelBuilder.Entity("StudManager.Data.Data.Entities.Student", b =>
                 {
+                    b.HasOne("StudManager.Data.Data.Entities.Course", null)
+                        .WithOne("Student")
+                        .HasForeignKey("StudManager.Data.Data.Entities.Student", "CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("StudManager.Data.Data.Entities.ApplicationUser", "ApplicationUser")
                         .WithOne("Student")
                         .HasForeignKey("StudManager.Data.Data.Entities.Student", "UserId");
@@ -377,6 +410,11 @@ namespace StudManager.Data.Migrations
                 {
                     b.Navigation("Admin");
 
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Course", b =>
+                {
                     b.Navigation("Student");
                 });
 #pragma warning restore 612, 618

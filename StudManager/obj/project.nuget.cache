@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "+Me86dJRTNX93/JlUSRzR7vTJASMaTX2qJ7kR0UKNph8Ed3C0r6e0X4QYvy/gxQclgarQUL3VgSNoDWsH69R9g==",
+  "dgSpecHash": "q2EfK3uRcwMUuCONqFXeum5AgURpbx3kXHmET4oKRE5tENpEvyqxRky/xo4mRQLV+2giASFDMVbjtAWDrSiEhA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager\\StudManager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
-    "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.15\\microsoft.aspnetcore.authentication.jwtbearer.3.1.15.nupkg.sha512",
+    "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.17\\microsoft.aspnetcore.authentication.jwtbearer.3.1.17.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.6\\microsoft.aspnetcore.cryptography.internal.5.0.6.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.6\\microsoft.aspnetcore.cryptography.keyderivation.5.0.6.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

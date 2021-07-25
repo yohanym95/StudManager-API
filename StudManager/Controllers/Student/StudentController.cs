@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
 using StudManager.Data.Models;
+using StudManager.Data.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Threading.Tasks;
@@ -16,12 +16,10 @@ namespace StudManager.Controllers.Students
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        public StudentController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly IStudentServices _studentServices;
+        public StudentController( IStudentServices studentServices)
         {
-            _roleManager = roleManager;
-            _userManager = userManager;
+            _studentServices = studentServices;
         }
 
         /// <summary>
@@ -36,7 +34,8 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = await _userManager.FindByNameAsync(model.UserName);
+                var userExists = _studentServices.ExistUser(model.UserName);
+
                 if (userExists != null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student already exists!" });
 
@@ -54,24 +53,14 @@ namespace StudManager.Controllers.Students
                     {
                         StudRegNo = model.StudentRegisterNo,
                         FullName = model.FirstName + " " + model.LastName,
+                        CourseId = model.CourseId
                     }
 
                 };
-                var result = await _userManager.CreateAsync(user, model.Password);
+                var result = await _studentServices.CreateStudent(user, model.Password);
                 
-                if (!result.Succeeded)
+                if (!result)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student creation failed! Please check user details and try again." });
-
-                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-                if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-                if (user.UserType == "User" && await _roleManager.RoleExistsAsync(UserRoles.User))
-                {
-                    await _userManager.AddToRoleAsync(user, UserRoles.User);
-                }
-
             }
             catch (Exception e)
             {
@@ -81,6 +70,7 @@ namespace StudManager.Controllers.Students
 
             return Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
         }
+
 
 
 
@@ -96,9 +86,10 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = await _userManager.FindByNameAsync(model.UserName);
-                if (userExists != null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student already exists!" });
+                var userExists = _studentServices.ExistUser(model.UserName);
+
+                if (userExists == null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
 
                 ApplicationUser user = new ApplicationUser()
                 {
@@ -109,29 +100,18 @@ namespace StudManager.Controllers.Students
                     Email = model.Email,
                     SecurityStamp = Guid.NewGuid().ToString(),
                     UserName = model.UserName,
-                    UserType = model.UserType,
+                    UserType = "Student",
                     Student = new Student
                     {
                         StudRegNo = model.StudentRegisterNo,
                         FullName = model.FirstName + " " + model.LastName,
                     }
-
                 };
-                var result = await _userManager.UpdateAsync(user);
-                
 
-                if (!result.Succeeded)
+                var result = await _studentServices.UpdateStudent(user);           
+
+                if (!result)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student update process failed! Please check user details and try again." });
-
-                if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-                if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-                    await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
-
-                if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                {
-                    await _userManager.AddToRoleAsync(user, UserRoles.User);
-                }
 
             }
             catch (Exception e)
@@ -155,20 +135,19 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = await _userManager.FindByNameAsync(model.username);
+                var userExists = _studentServices.ExistUser(model.username);
+
                 if (userExists == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student already exists!" });
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
 
-                ApplicationUser user = userExists;
+                ApplicationUser user = await userExists;
 
-                var result = await _userManager.ChangePasswordAsync(user, model.CurrentPasssword, model.NewPassword);
+                var result = await _studentServices.ChangePassword(user, model.CurrentPasssword, model.NewPassword);
 
-
-                if (!result.Succeeded)
+                if (!result)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Update password process is failed! Please check user details and try again." });
-
-            
-
+    
+                
             }
             catch (Exception e)
             {
@@ -178,5 +157,7 @@ namespace StudManager.Controllers.Students
 
             return Ok(new ResponseModel { Status = "Success", Message = "Password updated successfully!" });
         }
+
+
     }
 }

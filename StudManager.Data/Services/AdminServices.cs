@@ -1,28 +1,28 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using StudManager.Data.Context;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace StudManager.Data.Services
 {
-    public class StudentServices : IStudentServices
+    public class AdminServices : IAdminService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly DBContext _context;
-        public StudentServices(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, DBContext context)
+
+        public AdminServices(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
-            _context = context; 
         }
 
-        public async Task<bool> CreateStudent(ApplicationUser user, string password)
+        public async Task<bool> CreateManagementUser(ApplicationUser user, string password)
         {
             var result = await _userManager.CreateAsync(user, password);
-            
+
             if (result.Succeeded)
             {
                 if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
@@ -32,27 +32,10 @@ namespace StudManager.Data.Services
 
                 if (user.UserType == "User" && await _roleManager.RoleExistsAsync(UserRoles.User))
                 {
-                    await _userManager.AddToRoleAsync(user, UserRoles.User);
+                    await _userManager.AddToRoleAsync(user, UserRoles.Admin);
                 }
             }
 
-            return result.Succeeded;
-            
-        }
-
-
-        public async Task<bool> ChangePassword(ApplicationUser user, string currentPassword, string newPassword)
-        {
-            var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword); 
-
-            return result.Succeeded;
-        }
-
-        public async Task<bool> UpdateStudent(ApplicationUser user)
-        {
-            var result = await _userManager.UpdateAsync(user);   
-
-            
             return result.Succeeded;
 
         }
@@ -64,12 +47,12 @@ namespace StudManager.Data.Services
             return userExist;
         }
 
-        public void GetAllStudents()
+        public async Task<bool> UpdateManagementUser(ApplicationUser user)
         {
-            var students = _context.Users.Where(s => s.UserType == "Student").ToList();
+            var result = await _userManager.UpdateAsync(user);
+
+            return result.Succeeded;
+
         }
-
-
-
     }
 }

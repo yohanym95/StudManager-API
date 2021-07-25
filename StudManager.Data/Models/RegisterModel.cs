@@ -25,6 +25,8 @@ namespace StudManager.Data.Models
         public string UserType { get; set; }
         [Required]
         public string StudentRegisterNo { get; set; }
+        [Required]
+        public int CourseId { get; set; }
 
     }
 }

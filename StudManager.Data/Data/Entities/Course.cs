@@ -10,6 +10,7 @@ namespace StudManager.Data.Data.Entities
         public string CourseName { get; set; }
         public string Qualifications { get; set; }
         public string CourseNo { get; set; }
+        public Student Student { get; set; }
 
     }
 }
