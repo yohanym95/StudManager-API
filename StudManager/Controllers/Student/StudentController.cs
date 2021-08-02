@@ -7,6 +7,7 @@ using StudManager.Data.Models;
 using StudManager.Data.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace StudManager.Controllers.Students
@@ -158,6 +159,67 @@ namespace StudManager.Controllers.Students
             return Ok(new ResponseModel { Status = "Success", Message = "Password updated successfully!" });
         }
 
+        /// <summary>
+        ///     Get all students
+        /// </summary>
+        /// <response code="401">Unauthorized access</response>
+        [SwaggerOperation(Summary = "This endpoint use for get all students")]
+        [HttpGet]
+        [Route("all")]
+        [Authorize(Roles = UserRoles.User)]
+        public async Task<IActionResult> Get()
+        {
+            List<ApplicationUser> result;
 
-    }
+            try
+            {       
+                result =  _studentServices.GetAllStudents();
+
+                if (result.Count == 0)
+                    return Ok(new ResponseModel { Status = "Success", Message = "There is no students for now!" });
+
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        ///     Get all students
+        /// </summary>
+        /// <response code="401">Unauthorized access</response>
+        [SwaggerOperation(Summary = "This endpoint use for get student details")]
+        [HttpGet]
+        [Route("")]
+        [Authorize(Roles = UserRoles.User)]
+        public async Task<IActionResult> GetStudent(string id)
+        {
+            ApplicationUser user;
+
+            try
+            {
+                var userExists = _studentServices.GetStudent(id);
+
+                if (userExists == null)
+                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
+
+                 user = await userExists;
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+
+
+            return Ok(user);
+            }
+
+
+        }
 }

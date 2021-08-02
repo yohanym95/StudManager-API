@@ -4,6 +4,7 @@ using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace StudManager.Data.Services
 {
@@ -64,12 +65,19 @@ namespace StudManager.Data.Services
             return userExist;
         }
 
-        public void GetAllStudents()
+        public List<ApplicationUser> GetAllStudents()
         {
             var students = _context.Users.Where(s => s.UserType == "Student").ToList();
+
+            return students;
+            
         }
 
+        public async Task<ApplicationUser> GetStudent(string id)
+        {
+            var userExist = await _userManager.FindByIdAsync(id);
 
-
+            return userExist;
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace StudManager.Controllers.Admin
         /// <response code="401">Unauthorized access</response>
         [SwaggerOperation(Summary = "This endpoint use for create account to admin")]
         [HttpPost]
-        [Route("register")]
+        [Route("update")]
         [Authorize(Roles = UserRoles.SuperAdmin)]
         public async Task<IActionResult> Update([FromBody] RegisterModel model)
         {
