@@ -31,6 +31,7 @@ namespace StudManager.Controllers.Courses
 
         [SwaggerOperation(Summary = "This endpoint use for get all courses")]
         [HttpGet]
+        [Route("all")]
         [Authorize(Roles = UserRoles.Admin)]
         public IActionResult Get()
         {
@@ -43,6 +44,29 @@ namespace StudManager.Controllers.Courses
                     return Ok(courses);
                 }
                 return BadRequest("There is no courses");
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
+
+        [SwaggerOperation(Summary = "This endpoint use for get course details")]
+        [HttpGet]
+        [Route("{id}")]
+        [Authorize(Roles = UserRoles.Admin)]
+        public IActionResult GetCourse(int id)
+        {
+            try
+            {
+                var courses = _course.GetCourse(id);
+
+                if (courses != null)
+                {
+                    return Ok(courses);
+                }
+                return BadRequest("There is no course");
 
             }
             catch (Exception e)

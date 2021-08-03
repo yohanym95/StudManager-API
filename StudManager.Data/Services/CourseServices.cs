@@ -25,6 +25,11 @@ namespace StudManager.Data.Services
             return _context.Courses.OrderBy(c => c.Id).ToList();
         }
 
+        public Course GetCourse(int id)
+        {
+            return _context.Courses.Where(s => s.Id == id).FirstOrDefault();
+        }
+
         public bool SaveAll()
         {
             return _context.SaveChanges() > 0;

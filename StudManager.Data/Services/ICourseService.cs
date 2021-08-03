@@ -16,5 +16,7 @@ namespace StudManager.Data.Services
 
         public bool SaveAll();
 
+        public Course GetCourse(int id);
+
     }
 }
