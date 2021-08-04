@@ -10,8 +10,9 @@ namespace StudManager.Data.Services
     public interface IStudentServices
     {
         Task<bool> CreateStudent(ApplicationUser user, string password);
-        Task<ApplicationUser> ExistUser(string userName);
-        Task<bool> UpdateStudent(ApplicationUser user);
+        Task<ApplicationUser> ExistUserByName(string userName);
+        Task<ApplicationUser> ExistUserById(string id);
+        int UpdateStudent(ApplicationUser user);
         Task<bool> ChangePassword(ApplicationUser user, string currentPassword, string newPassword);
         List<ApplicationUser> GetAllStudents();
         Task<ApplicationUser> GetStudent(string id);

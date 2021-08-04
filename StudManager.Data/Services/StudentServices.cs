@@ -5,6 +5,7 @@ using StudManager.Data.Data.Roles;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace StudManager.Data.Services
 {
@@ -49,25 +50,41 @@ namespace StudManager.Data.Services
             return result.Succeeded;
         }
 
-        public async Task<bool> UpdateStudent(ApplicationUser user)
+        public int UpdateStudent(ApplicationUser user)
         {
-            var result = await _userManager.UpdateAsync(user);   
+            var student = _context.Users.Include(u => u.Student).Where(s => s.UserType == "Student" && s.Id == user.Id).FirstOrDefault();
 
-            
-            return result.Succeeded;
+            student.Email = user.Email;
+            student.FirstName = user.FirstName;
+            student.LastName = user.LastName;
+            student.PhoneNumber = user.PhoneNumber;
+            student.BirthDate = user.BirthDate;
+            student.UserName = user.UserName;
+            student.Student.StudRegNo = user.Student.StudRegNo;
+            student.Student.FullName = user.FirstName + " " + user.LastName;
+            var result = _context.SaveChanges();
+
+            return result;
 
         }
 
-        public async Task<ApplicationUser> ExistUser(string userName)
+        public async Task<ApplicationUser> ExistUserByName(string userName)
         {
             var userExist = await _userManager.FindByNameAsync(userName);
 
             return userExist;
         }
 
+        public async Task<ApplicationUser> ExistUserById(string id)
+        {
+            var userExist = await _userManager.FindByIdAsync(id);
+
+            return userExist;
+        }
+
         public List<ApplicationUser> GetAllStudents()
         {
-            var students = _context.Users.Where(s => s.UserType == "Student").ToList();
+            var students = _context.Users.Include(u => u.Student).Where(s => s.UserType == "Student").ToList();
 
             return students;
             
@@ -75,7 +92,7 @@ namespace StudManager.Data.Services
 
         public async Task<ApplicationUser> GetStudent(string id)
         {
-            var userExist = await _userManager.FindByIdAsync(id);
+            var userExist = _context.Users.Include(u => u.Student).Where(s => s.UserType == "Student" && s.Id == id).FirstOrDefault();
 
             return userExist;
         }

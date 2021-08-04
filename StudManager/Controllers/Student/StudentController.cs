@@ -35,9 +35,9 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = _studentServices.ExistUser(model.UserName);
+                var userExists = _studentServices.ExistUserByName(model.UserName);
 
-                if (userExists != null)
+                if (userExists.Result != null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student already exists!" });
 
                 ApplicationUser user = new ApplicationUser()
@@ -83,17 +83,18 @@ namespace StudManager.Controllers.Students
         [HttpPut]
         [Route("update")]
         [Authorize(Roles = UserRoles.User)]
-        public async Task<IActionResult> Update([FromBody] RegisterModel model)
+        public async Task<IActionResult> Update([FromBody] RegisterModel model, string id)
         {
             try
             {
-                var userExists = _studentServices.ExistUser(model.UserName);
+                var userExists = _studentServices.ExistUserById(id);
 
-                if (userExists == null)
+                if (userExists.Result == null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
 
                 ApplicationUser user = new ApplicationUser()
                 {
+                    Id = id,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     BirthDate = model.BirthDate,
@@ -109,9 +110,9 @@ namespace StudManager.Controllers.Students
                     }
                 };
 
-                var result = await _studentServices.UpdateStudent(user);           
+                var result = _studentServices.UpdateStudent(user);           
 
-                if (!result)
+                if (!(result > 0))
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student update process failed! Please check user details and try again." });
 
             }
@@ -136,9 +137,9 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = _studentServices.ExistUser(model.username);
+                var userExists = _studentServices.ExistUserByName(model.username);
 
-                if (userExists == null)
+                if (userExists.Result == null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
 
                 ApplicationUser user = await userExists;

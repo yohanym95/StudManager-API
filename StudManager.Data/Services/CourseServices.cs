@@ -35,7 +35,7 @@ namespace StudManager.Data.Services
             return _context.SaveChanges() > 0;
         }
 
-        public async void UpdateCourse(Course model)
+        public void UpdateCourse(Course model)
         {
             var course = _context.Courses.FirstOrDefault(C => C.Id == model.Id);
 
@@ -44,8 +44,7 @@ namespace StudManager.Data.Services
             course.CourseName = model.CourseName;
             course.CourseNo = model.CourseNo;
             course.Qualifications = model.Qualifications;
-            //_context.Update(course);
-            await _context.SaveChangesAsync(); 
+            _context.SaveChanges(); 
         }
     }
 }
