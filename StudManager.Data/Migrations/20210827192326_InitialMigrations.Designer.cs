@@ -10,8 +10,8 @@ using StudManager.Data.Context;
 namespace StudManager.Data.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20210804011058_coursekeytostudent")]
-    partial class coursekeytostudent
+    [Migration("20210827192326_InitialMigrations")]
+    partial class InitialMigrations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

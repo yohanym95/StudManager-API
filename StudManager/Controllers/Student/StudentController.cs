@@ -6,9 +6,11 @@ using StudManager.Data.Data.Roles;
 using StudManager.Data.Models;
 using StudManager.Data.Services;
 using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SwaggerOperationAttribute = Swashbuckle.AspNetCore.Annotations.SwaggerOperationAttribute;
 
 namespace StudManager.Controllers.Students
 {
