@@ -7,16 +7,8 @@ using System.Threading.Tasks;
 
 namespace StudManager.Data.Services
 {
-    public interface ICourseService
+    public interface ICourseService : IGenericService<Course>
     {
-        public IEnumerable<Course> GetAllCourse();
-        public void AddCourse(Course model);
-
-        public void UpdateCourse(Course model);
-
-        public bool SaveAll();
-
-        public Course GetCourse(int id);
 
     }
 }

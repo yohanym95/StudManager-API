@@ -34,7 +34,7 @@ namespace StudManager.Data.Services
             throw new NotImplementedException();
         }
 
-        public virtual Task<bool> Delete(Guid id)
+        public virtual Task<bool> Delete(int id)
         {
             throw new NotImplementedException();
         }
@@ -44,7 +44,7 @@ namespace StudManager.Data.Services
             return await dbSet.Where(predicate).ToListAsync();
         }
 
-        public async virtual Task<T> GetById(Guid id)
+        public async virtual Task<T> GetById(int id)
         {
             return await dbSet.FindAsync(id);
         }

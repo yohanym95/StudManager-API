@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using StudManager.Data.Services;
+using System.Threading.Tasks;
 
 namespace StudManager.Data.Configuration
 {
-    interface IUnitOfWork
+    public interface IUnitOfWork
     {
+        ICourseService Courses { get; }
+        Task CompleteAsync();
     }
 }

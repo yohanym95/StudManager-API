@@ -1,50 +1,76 @@
-﻿using StudManager.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using StudManager.Data.Context;
 using StudManager.Data.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace StudManager.Data.Services
 {
-    public class CourseServices : ICourseService
+    public class CourseServices : GenericService<Course>, ICourseService
     {
-        private readonly DBContext _context;
 
-        public CourseServices(DBContext context)
+        public CourseServices(DBContext context, ILogger logger) : base(context, logger)
         {
-            _context = context;
-        }
-        public void AddCourse(Course model)
-        {
-            _context.Courses.Add(model);
         }
 
-        public IEnumerable<Course> GetAllCourse()
+        public override async Task<IEnumerable<Course>> All()
         {
-            return _context.Courses.OrderBy(c => c.Id).ToList();
+            try
+            {
+                return await dbSet.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} All function error", typeof(CourseServices));
+                return new List<Course>();
+            }
         }
 
-        public Course GetCourse(int id)
+        public override async Task<bool> Delete(int id)
         {
-            return _context.Courses.Where(s => s.Id == id).FirstOrDefault();
+            try
+            {
+                var exist = await dbSet.Where(x => x.Id == id)
+                                        .FirstOrDefaultAsync();
+
+                if (exist == null) return false;
+
+                dbSet.Remove(exist);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} Delete function error", typeof(CourseServices));
+                return false;
+            }
         }
 
-        public bool SaveAll()
+        public override async Task<bool> Upsert(Course entity)
         {
-            return _context.SaveChanges() > 0;
-        }
+            try
+            {
+                var existingUser = await dbSet.Where(x => x.Id == entity.Id)
+                                                    .FirstOrDefaultAsync();
 
-        public void UpdateCourse(Course model)
-        {
-            var course = _context.Courses.FirstOrDefault(C => C.Id == model.Id);
+                if (existingUser == null)
+                    return await Add(entity);
 
-            if (course == null) throw new Exception("Course record is not found");
+                existingUser.CourseName = entity.CourseName;
+                existingUser.CourseNo = entity.CourseNo;
+                existingUser.Qualifications = entity.Qualifications;
 
-            course.CourseName = model.CourseName;
-            course.CourseNo = model.CourseNo;
-            course.Qualifications = model.Qualifications;
-            _context.SaveChanges(); 
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "{Repo} Upsert function error", typeof(CourseServices));
+                return false;
+            }
         }
     }
 }

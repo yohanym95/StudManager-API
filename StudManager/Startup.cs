@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using StudManager.Data.Configuration;
 using StudManager.Data.Context;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Services;
@@ -44,7 +45,7 @@ namespace StudManager
             });
 
 
-            services.AddScoped<ICourseService, CourseServices>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IStudentServices, StudentServices>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
