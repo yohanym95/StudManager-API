@@ -53,7 +53,7 @@ namespace StudManager
             services.AddAuthentication()
                 .AddCookie()
                 .AddJwtBearer(cfg =>
-                {
+                { 
                     cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateIssuer = true,

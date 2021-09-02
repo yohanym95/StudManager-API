@@ -30,7 +30,9 @@ namespace StudManager.Controllers.Courses
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
+
 
         [SwaggerOperation(Summary = "This endpoint use for get all courses")]
         [HttpGet]
@@ -79,19 +81,14 @@ namespace StudManager.Controllers.Courses
             {
                 if (ModelState.IsValid)
                 {
-                    var newCourse = new Course()
-                    {
-                        CourseName = model.CourseName,
-                        Qualifications = model.Qualifications,
-                        CourseNo = model.CourseNo
-                    };
 
-                    var course = _mapper.Map<Course>(model);
+                    var course = _mapper.Map<CourseModel, Course>(model);
 
                     await _unitOfWork.Courses.Add(course);
                     await _unitOfWork.CompleteAsync();
 
-                    return CreatedAtAction("GetItem", new { course.Id }, course);
+                    //return CreatedAtAction("GetItem", new { course.Id }, course);
+                    return Ok(course);
                 }
                 else
                 {
@@ -102,7 +99,6 @@ namespace StudManager.Controllers.Courses
             {
                 return BadRequest(e);
             }
-            return BadRequest("Failed to Saved New Course Module");
         }
 
         [SwaggerOperation(Summary = "This endpoint use for update course")]
@@ -114,12 +110,6 @@ namespace StudManager.Controllers.Courses
             {
                 if (ModelState.IsValid)
                 {
-                    var newCourse = new Course()
-                    {
-                        CourseName = model.CourseName,
-                        Qualifications = model.Qualifications,
-                        CourseNo = model.CourseNo
-                    };
 
                     var course = _mapper.Map<Course>(model);
 

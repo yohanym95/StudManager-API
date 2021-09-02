@@ -9,7 +9,11 @@ namespace StudManager.Data.Context
 {
     public class DBContext : IdentityDbContext<ApplicationUser>
     {
-        public DBContext(DbContextOptions<DBContext> options) : base(options)
+        public DBContext()
+        {
+
+        }
+        public DBContext(DbContextOptions options) : base(options)
         {
         }
         public DbSet<Student> Students { get; set; }

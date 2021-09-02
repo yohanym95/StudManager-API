@@ -5,7 +5,6 @@ using StudManager.Data.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace StudManager.Data.Services
@@ -15,6 +14,7 @@ namespace StudManager.Data.Services
 
         public CourseServices(DBContext context, ILogger logger) : base(context, logger)
         {
+
         }
 
         public override async Task<IEnumerable<Course>> All()
