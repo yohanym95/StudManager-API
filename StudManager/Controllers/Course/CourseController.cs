@@ -111,11 +111,11 @@ namespace StudManager.Controllers.Courses
                 if (ModelState.IsValid)
                 {
 
-                    var course = _mapper.Map<Course>(model);
+                    var course = _mapper.Map<CourseModel, Course>(model);
 
                     await _unitOfWork.Courses.Upsert(course);
                     await _unitOfWork.CompleteAsync();
-
+                    
                     return Ok(course);
                 }
                 else
@@ -142,7 +142,7 @@ namespace StudManager.Controllers.Courses
             await _unitOfWork.Courses.Delete(id);
             await _unitOfWork.CompleteAsync();
 
-            return Ok(item);
+            return Ok();
         }
     }
 }

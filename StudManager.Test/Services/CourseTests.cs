@@ -10,6 +10,7 @@ using Xunit;
 using StudManager.Data.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace StudManager.Test.Services
 {
@@ -125,42 +126,74 @@ namespace StudManager.Test.Services
         }
 
 
-        //[Fact]
-        //public void CheckCourseUpdate()
-        //{
-        //    var mockIlogger = new Mock<ILogger<CourseController>>();
-        //    var mockIMapper = new Mock<IMapper>();
+        [Fact]
+        public void CheckCourseUpdate()
+        {
+            var mockIlogger = new Mock<ILogger<CourseController>>();
+            var mockIMapper = new Mock<IMapper>();
 
 
-        //    var moqCoure = new Course
-        //    {
-        //        Id = 1,
-        //        CourseName = "CIS",
-        //        CourseNo = "APS_03",
-        //        Qualifications = "MATHS"
-        //    };
+            var moqCoure = new Course
+            {
+                Id = 1,
+                CourseName = "CIS",
+                CourseNo = "APS_03",
+                Qualifications = "MATHS"
+            };
 
-        //    var moqCourse = new CourseModel
-        //    {
-        //        Id = 1,
-        //        CourseName = "CIS",
-        //        CourseNo = "APS_03",
-        //        Qualifications = "MATHS"
-        //    };
+            var moqCourse = new CourseModel
+            {
+                Id = 1,
+                CourseName = "CIS",
+                CourseNo = "APS_03",
+                Qualifications = "MATHS"
+            };
 
-        //    mockIMapper.Setup(s => s.Map<CourseModel, Course>(It.IsAny<CourseModel>())).Returns(moqCoure);
+            mockIMapper.Setup(s => s.Map<CourseModel, Course>(It.IsAny<CourseModel>())).Returns(moqCoure);
 
-        //    mock.Setup(s => s.Courses.Upsert(It.IsAny<Course>())).ReturnsAsync(true);
+            mock.Setup(s => s.Courses.Upsert(It.IsAny<Course>())).ReturnsAsync(true);
 
-        //    CourseController courseController = new CourseController(mockIlogger.Object, mock.Object, mockIMapper.Object);
+            CourseController courseController = new CourseController(mockIlogger.Object, mock.Object, mockIMapper.Object);
 
-        //    var result = courseController.Update(moqCourse);
+            var result = courseController.Update(moqCourse);
 
-        //    var okResult = result.Result as OkObjectResult;
+            var okResult = result.Result as OkObjectResult;
 
-        //    var resultItem = Assert.IsAssignableFrom<Course>(okResult.Value);
+            if (okResult.StatusCode.Value == 200)
+            {
+                var resultItem = Assert.IsType<Course>(okResult.Value);
 
-        //    Assert.Equal(moqCoure, resultItem);
-        //}
+                Assert.True(moqCoure.Equals(resultItem));
+            }
+            
+        }
+
+        [Fact]
+        public void CheckCourseDelete()
+        {
+            var mockIlogger = new Mock<ILogger<CourseController>>();
+            var mockIMapper = new Mock<IMapper>();
+            var moqCoure = new Course
+            {
+                Id = 1,
+                CourseName = "CIS",
+                CourseNo = "APS_03",
+                Qualifications = "MATHS"
+            };
+            mock.Setup(s => s.Courses.GetById(It.IsAny<int>())).ReturnsAsync(moqCoure);
+
+            mock.Setup(s => s.Courses.Delete(It.IsAny<int>())).ReturnsAsync(true);
+
+            CourseController courseController = new CourseController(mockIlogger.Object, mock.Object, mockIMapper.Object);
+
+            var result = courseController.DeleteItem(1);
+
+            var okResult = result.Result as OkObjectResult;
+
+            Assert.True(result.IsCompletedSuccessfully);
+
+
+
+        }
     }
 }
