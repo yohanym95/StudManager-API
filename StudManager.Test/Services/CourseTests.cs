@@ -132,7 +132,6 @@ namespace StudManager.Test.Services
             var mockIlogger = new Mock<ILogger<CourseController>>();
             var mockIMapper = new Mock<IMapper>();
 
-
             var moqCoure = new Course
             {
                 Id = 1,
@@ -191,8 +190,6 @@ namespace StudManager.Test.Services
             var okResult = result.Result as OkObjectResult;
 
             Assert.True(result.IsCompletedSuccessfully);
-
-
 
         }
     }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudManager.Data.Context;
 
 namespace StudManager.Data.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20210910115038_dbchanges")]
+    partial class dbchanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,17 +291,8 @@ namespace StudManager.Data.Migrations
                     b.Property<DateTime>("DateofReceipt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FeesDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FeesType")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("RecieptNo")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StuId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
