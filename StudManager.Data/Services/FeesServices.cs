@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using StudManager.Data.Context;
 using StudManager.Data.Data.Entities;
+using StudManager.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace StudManager.Data.Services
 {
     public class FeesServices : GenericService<Fees>, IFeesServices
     {
+
         public FeesServices(DBContext context, ILogger logger) : base(context, logger)
         {
 
@@ -45,6 +47,27 @@ namespace StudManager.Data.Services
             {
                 _logger.LogError(e, "{Repo} Delete function error", typeof(FeesServices));
                 return false;
+            }
+        }
+
+        public override async Task<Fees> GetById(int id)
+        {
+            try
+            {
+                var fees = await dbSet.Where(f => f.Id == id).FirstOrDefaultAsync();
+
+                if (fees == null) return null;
+
+                
+
+
+                return fees ;
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "{Repo} Delete function error", typeof(FeesServices));
+                return new Fees();
             }
         }
 

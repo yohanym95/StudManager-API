@@ -1,9 +1,9 @@
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\bin\Debug\netcoreapp3.1\StudManager.Data.deps.json
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\bin\Debug\netcoreapp3.1\StudManager.Data.dll
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\bin\Debug\netcoreapp3.1\StudManager.Data.pdb
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\obj\Debug\netcoreapp3.1\StudManager.Data.csprojAssemblyReference.cache
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\obj\Debug\netcoreapp3.1\StudManager.Data.AssemblyInfoInputs.cache
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\obj\Debug\netcoreapp3.1\StudManager.Data.AssemblyInfo.cs
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\obj\Debug\netcoreapp3.1\StudManager.Data.csproj.CoreCompileInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\bin\Debug\netcoreapp3.1\StudManager.Data.deps.json
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\bin\Debug\netcoreapp3.1\StudManager.Data.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\bin\Debug\netcoreapp3.1\StudManager.Data.pdb
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\obj\Debug\netcoreapp3.1\StudManager.Data.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Data\obj\Debug\netcoreapp3.1\StudManager.Data.pdb

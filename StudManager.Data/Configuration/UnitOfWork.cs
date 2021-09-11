@@ -16,6 +16,7 @@ namespace StudManager.Data.Configuration
 
         public ICourseService Courses { get; private set; }
         public IFeesServices Fees { get; private set; }
+        public IStudentServices Student { get; private set; }
 
         public UnitOfWork(DBContext context, ILoggerFactory loggerFactory)
         {

@@ -6,6 +6,8 @@ namespace StudManager.Data.Configuration
     public interface IUnitOfWork
     {
         ICourseService Courses { get; }
+        IFeesServices Fees { get; }
+        IStudentServices Student { get; }
         Task CompleteAsync();
     }
 }

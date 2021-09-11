@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace StudManager.Data.Services
 {
@@ -14,6 +15,7 @@ namespace StudManager.Data.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly DBContext _context;
+
         public StudentServices(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, DBContext context)
         {
             _roleManager = roleManager;
@@ -93,6 +95,13 @@ namespace StudManager.Data.Services
         public async Task<ApplicationUser> GetStudent(string id)
         {
             var userExist = _context.Users.Include(u => u.Student).Where(s => s.UserType == "Student" && s.Id == id).FirstOrDefault();
+
+            return userExist;
+        }
+
+        public async Task<Student> GetStudent(int id)
+        {
+            var userExist = _context.Students.Where(s => s.Id == id).FirstOrDefault();
 
             return userExist;
         }

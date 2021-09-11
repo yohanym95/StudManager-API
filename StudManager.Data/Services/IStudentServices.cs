@@ -16,5 +16,6 @@ namespace StudManager.Data.Services
         Task<bool> ChangePassword(ApplicationUser user, string currentPassword, string newPassword);
         List<ApplicationUser> GetAllStudents();
         Task<ApplicationUser> GetStudent(string id);
+        Task<Student> GetStudent(int id);
     }
 }

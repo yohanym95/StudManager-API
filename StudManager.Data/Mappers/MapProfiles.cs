@@ -14,6 +14,10 @@ namespace StudManager.Data.Mappers
             CreateMap<Course, CourseModel>()
                 .ForMember( o => o.Id, opt => opt.MapFrom(src => 0))
                  .ReverseMap();
+
+            CreateMap<Fees, FeesModel>()
+                .ForMember(o => o.Id, opt => opt.MapFrom(src => 0))
+                 .ReverseMap();
         }
     }
 }
