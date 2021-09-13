@@ -109,9 +109,6 @@ namespace StudManager.Test.Services
                 Qualifications = "MATHS"
             };
 
-
-
-
             mock.Setup(s => s.Courses.GetById(It.IsAny<int>())).ReturnsAsync(moqCoure);
 
             CourseController courseController = new CourseController(mockIlogger.Object, mock.Object, mockIMapper.Object);
