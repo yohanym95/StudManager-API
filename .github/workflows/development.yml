@@ -30,7 +30,7 @@ jobs:
         name: TestRunReports
         path: testresults
   
-  action-pull-request:
+  create-pull-request:
     needs: build-and-test
     runs-on: windows-latest
     steps:
@@ -41,10 +41,10 @@ jobs:
       with: 
         source_branch: development
         target_branch: main
-        title: Automatic pull Request to main
-        body: ":rebot: "Web API bot raised the PR"
-        reviewer: yohanym95
-        label: dev
-        draft: false
+        pr_title: "Automatic pull Request to main"
+        pr_body: ":rebot: "Web API bot raised the PR"
+        pr_reviewer: yohanym95
+        pr_label: dev
+        pr_draft: false
         github_token: ${{ secrets.GITHUB_TOKEN }}
    
