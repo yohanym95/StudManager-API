@@ -38,11 +38,12 @@ jobs:
     - name: Create a Pull Request
       uses: repo-sync/pull-request@v2
       with: 
-        destination_branch: "main"
-        title: "${{ github.event.commits[0].message }}"
+        source_branch: development
+        target_branch: main
+        title: ${{ github.event.commits[0].message }}
         body: ":rebot: "Web API bot raised the PR"
-        reviewer: "yohanym95"
-        label: "dev"
+        reviewer: yohanym95
+        label: dev
         draft: false
         github_token: ${{ secrets.GITHUB_TOKEN }}
    
