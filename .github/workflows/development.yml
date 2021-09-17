@@ -40,7 +40,7 @@ jobs:
       with: 
         source_branch: development
         target_branch: main
-        title: ${{ github.event.commits[0].message }}
+        title: Automatic pull Request to main
         body: ":rebot: "Web API bot raised the PR"
         reviewer: yohanym95
         label: dev
