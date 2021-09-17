@@ -33,6 +33,7 @@ jobs:
   create-pull-request:
     needs: build-and-test
     runs-on: windows-latest
+    
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -41,8 +42,6 @@ jobs:
       with: 
         source_branch: "development"
         destination_branch: "main"
-        pr_title: "Automatic pull Request to main"
-        pr_body: ":rebot: "Web API bot raised the PR"
         pr_reviewer: "yohanym95"
         pr_label: dev
         pr_draft: false
