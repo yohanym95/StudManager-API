@@ -39,11 +39,11 @@ jobs:
     - name: Create a Pull Request
       uses: repo-sync/pull-request@v2
       with: 
-        source_branch: development
-        target_branch: main
+        source_branch: "development"
+        destination_branch: "main"
         pr_title: "Automatic pull Request to main"
         pr_body: ":rebot: "Web API bot raised the PR"
-        pr_reviewer: yohanym95
+        pr_reviewer: "yohanym95"
         pr_label: dev
         pr_draft: false
         github_token: ${{ secrets.GITHUB_TOKEN }}
