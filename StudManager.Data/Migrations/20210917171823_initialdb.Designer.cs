@@ -10,8 +10,8 @@ using StudManager.Data.Context;
 namespace StudManager.Data.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20210827192326_InitialMigrations")]
-    partial class InitialMigrations
+    [Migration("20210917171823_initialdb")]
+    partial class initialdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -278,6 +278,27 @@ namespace StudManager.Data.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Exam", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ExamDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExamName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExamResult")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exams");
+                });
+
             modelBuilder.Entity("StudManager.Data.Data.Entities.Fees", b =>
                 {
                     b.Property<int>("Id")
@@ -288,11 +309,20 @@ namespace StudManager.Data.Migrations
                     b.Property<string>("AmountofFees")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateofReceipt")
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("FeesDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FeesType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RecieptNo")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StuId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -328,6 +358,21 @@ namespace StudManager.Data.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Students");
+                });
+
+            modelBuilder.Entity("StudManager.Data.Data.Entities.StudentExam", b =>
+                {
+                    b.Property<int>("ExamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ExamId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentExams");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -399,11 +444,40 @@ namespace StudManager.Data.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("StudManager.Data.Data.Entities.StudentExam", b =>
+                {
+                    b.HasOne("StudManager.Data.Data.Entities.Exam", "Exam")
+                        .WithMany("StudentExams")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudManager.Data.Data.Entities.Student", "Student")
+                        .WithMany("StudentExams")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("StudManager.Data.Data.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("Admin");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Exam", b =>
+                {
+                    b.Navigation("StudentExams");
+                });
+
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Student", b =>
+                {
+                    b.Navigation("StudentExams");
                 });
 #pragma warning restore 612, 618
         }
