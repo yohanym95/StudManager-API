@@ -2,10 +2,7 @@ name: StudManager CI/CD
 
 on:
   push:
-    branches: 
-      - development*
-  paths-ignore:
-      - 'terraform/StudManager/.terraform'
+    branches: [ development ]
 
 jobs:
   build:
