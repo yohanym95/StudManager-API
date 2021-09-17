@@ -30,11 +30,12 @@ jobs:
         name: TestRunReports
         path: testresults
   
-  create-pull-request:
+  action-pull-request:
     needs: build-and-test
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
     - name: Create a Pull Request
       uses: repo-sync/pull-request@v2
       with: 
