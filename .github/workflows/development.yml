@@ -20,5 +20,12 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
       working-directory: .\StudManager
+    - name: Make Directory for test results
+      run: mkdir -p testresults
     - name: Test
-      run: dotnet test 
+      run: dotnet test  --logger html --results-directory testresults --no-build
+    - name: Upload test results
+      run: actions/upload-artifact@v2
+      with:
+        name: TestRunReports
+        path: testresults
