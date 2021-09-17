@@ -39,7 +39,7 @@ jobs:
       uses: repo-sync/pull-request@v2
       with: 
         destination_branch: "main"
-        pr_title: "Pulling ${{ github.ref }} into master"
+        pr_title: "${{ github.event.commits[0].message }}"
         pr_body: ":rebot: "Web API bot raised the PR"
         pr_reviewer: "yohanym95"
         pr_label: "dev"
