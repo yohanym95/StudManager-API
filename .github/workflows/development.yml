@@ -1,0 +1,49 @@
+name: StudManager CI/CD
+
+on:
+  push:
+    branches: [ development ]
+
+jobs:
+  build-and-test:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: .\StudManager
+    - name: Make Directory for test results
+      run: mkdir -p testresults
+    - name: Test
+      run: dotnet test  --logger html --results-directory testresults --no-build
+    - name: Upload test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: TestRunReports
+        path: testresults
+  
+  create-pull-request:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    - name: Create a Pull Request
+      uses: repo-sync/pull-request@v2
+      with: 
+        source_branch: "development"
+        destination_branch: "main"
+        pr_reviewer: "yohanym95"
+        pr_label: dev
+        pr_draft: false
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+   
