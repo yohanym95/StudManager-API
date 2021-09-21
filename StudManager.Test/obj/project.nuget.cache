@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "h9PeQqDWDakW5VB0w0k/XtJ5TXyUDxSUgnPAJQ8GwyNddlw249xFxLjQCbBqX9elImqUlxaRjk2XqFBHxu8iBQ==",
+  "dgSpecHash": "Tz1tvHodOBuB7Iu0kQqPck3lW1UZ9MuiH+CIrhaRO5+wfAHzFKCXBXGYqk+JRGM/OBx4JYv/WjsY5OS18Phc4A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager.Test\\StudManager.Test.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,7 @@
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.testplatform.objectmodel\\16.7.1\\microsoft.testplatform.objectmodel.16.7.1.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.testplatform.testhost\\16.7.1\\microsoft.testplatform.testhost.16.7.1.nupkg.sha512",
+    "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Yohan Malshika\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
