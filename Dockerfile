@@ -22,4 +22,4 @@ RUN dotnet publish "StudManager.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "StudManager.dll"]
+CMD ["dotnet", "StudManager.dll"]
