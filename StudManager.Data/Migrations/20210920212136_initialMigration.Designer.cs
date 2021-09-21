@@ -10,8 +10,8 @@ using StudManager.Data.Context;
 namespace StudManager.Data.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20210917171823_initialdb")]
-    partial class initialdb
+    [Migration("20210920212136_initialMigration")]
+    partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
