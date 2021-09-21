@@ -1,0 +1,49 @@
+name: StudManager CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+    
+env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  APP_NAME: ${{ 'stud-manager-app' }}
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+      working-directory: .\StudManager
+    - name: Test
+      run: dotnet test
+      
+  deploy:
+    name: Deploy to Heroku
+    runs-on: ubuntu-18.04
+    steps:
+
+    # Clone the repository
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Build Docker image
+    - name: Docker build
+      run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+
+    # Push the Docker image to Heroku Container Registry
+    - name: Publish
+      run: |
+        heroku container:push web -a $APP_NAME
+        heroku container:release web -a $APP_NAME
