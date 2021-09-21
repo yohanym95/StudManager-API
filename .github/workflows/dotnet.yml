@@ -8,7 +8,7 @@ on:
     
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-  APP_NAME: ${{ 'stud-manager-app' }}
+  APP_NAME: ${{ 'studmanager' }}
 
 jobs:
   build:
