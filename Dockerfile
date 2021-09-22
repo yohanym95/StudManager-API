@@ -23,4 +23,4 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 # ENTRYPOINT ["dotnet", "StudManager.dll"]
-CMD ASPNETCORE_URLS=http://*$PORT dotnet StudManager.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet StudManager.dll
