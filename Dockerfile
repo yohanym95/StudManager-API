@@ -9,7 +9,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
-COPY ["/StudManager/StudManager.csproj", "StudManager/"]
+COPY ["StudManager/StudManager.csproj", "StudManager/"]
 COPY ["StudManager.Data/StudManager.Data.csproj", "StudManager.Data/"]
 RUN dotnet restore "StudManager/StudManager.csproj"
 COPY . .
