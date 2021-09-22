@@ -22,4 +22,5 @@ RUN dotnet publish "StudManager.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-CMD ["dotnet", "StudManager.dll"]
+# ENTRYPOINT ["dotnet", "StudManager.dll"]
+CMD ASPNETCORE_URLS=http://*$PORT dotnet StudManager.dll
