@@ -96,6 +96,7 @@ namespace StudManager
 
             });
 
+            services.AddCors();
             services.AddMvc().AddNewtonsoftJson(CFG => CFG.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddControllers();
         }
@@ -126,7 +127,7 @@ namespace StudManager
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors();
+            app.UseCors(option => option.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
             app.UseAuthentication();
             app.UseAuthorization();
 
