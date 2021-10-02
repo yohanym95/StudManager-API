@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using StudManager.Data.Configuration;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
 using StudManager.Data.Models;
@@ -17,12 +18,11 @@ namespace StudManager.Controllers.Admin
     [ApiController]
     public class AdminController : Controller
     {
-        private readonly IAdminService _adminServices;
-        public AdminController(IAdminService adminService)
+        private readonly IUnitOfWork _unitOfWork;
+        public AdminController(IUnitOfWork unitOfWork)
         {
-            _adminServices = adminService;
+            _unitOfWork = unitOfWork;
         }
-
         /// <summary>
         ///     create account for management level user
         /// </summary>
@@ -33,7 +33,7 @@ namespace StudManager.Controllers.Admin
         [Authorize(Roles = UserRoles.SuperAdmin)]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
-            var userExists = await _adminServices.ExistUser(model.UserName);
+            var userExists = await _unitOfWork.Admin.ExistUser(model.UserName);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User already exists!" });
 
@@ -49,7 +49,7 @@ namespace StudManager.Controllers.Admin
                 UserType = "Admin"
 
             };
-            var result = await _adminServices.CreateManagementUser(user, model.Password);
+            var result = await _unitOfWork.Admin.CreateManagementUser(user, model.Password);
             if (!result)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
@@ -61,12 +61,12 @@ namespace StudManager.Controllers.Admin
         /// </summary>
         /// <response code="401">Unauthorized access</response>
         [SwaggerOperation(Summary = "This endpoint use for create account to admin")]
-        [HttpPost]
+        [HttpPut]
         [Route("update")]
         [Authorize(Roles = UserRoles.SuperAdmin)]
         public async Task<IActionResult> Update([FromBody] RegisterModel model)
         {
-            var userExists = await _adminServices.ExistUser(model.UserName);
+            var userExists = await _unitOfWork.Admin.ExistUser(model.UserName);
             if (userExists == null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User is not registered!" });
 
@@ -82,7 +82,7 @@ namespace StudManager.Controllers.Admin
                 UserType = model.UserType
 
             };
-            var result = await _adminServices.UpdateManagementUser(user);
+            var result = await _unitOfWork.Admin.UpdateManagementUser(user);
             if (!result)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User update process failed! Please check user details and try again." });
 

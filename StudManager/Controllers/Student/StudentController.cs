@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using StudManager.Data.Configuration;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
 using StudManager.Data.Models;
@@ -19,10 +21,11 @@ namespace StudManager.Controllers.Students
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IStudentServices _studentServices;
-        public StudentController( IStudentServices studentServices)
+        private readonly ILogger<StudentController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
+        public StudentController(IUnitOfWork unitOfWork)
         {
-            _studentServices = studentServices;
+            _unitOfWork = unitOfWork;
         }
 
         /// <summary>
@@ -37,7 +40,7 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = _studentServices.ExistUserByName(model.UserName);
+                var userExists = _unitOfWork.Student.ExistUserByName(model.UserName);
 
                 if (userExists.Result != null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student already exists!" });
@@ -60,7 +63,7 @@ namespace StudManager.Controllers.Students
                     }
 
                 };
-                var result = await _studentServices.CreateStudent(user, model.Password);
+                var result = await _unitOfWork.Student.CreateStudent(user, model.Password);
                 
                 if (!result)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student creation failed! Please check user details and try again." });
@@ -89,7 +92,7 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = _studentServices.ExistUserById(id);
+                var userExists = _unitOfWork.Student.ExistUserById(id);
 
                 if (userExists.Result == null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
@@ -112,7 +115,7 @@ namespace StudManager.Controllers.Students
                     }
                 };
 
-                var result = _studentServices.UpdateStudent(user);           
+                var result = _unitOfWork.Student.UpdateStudent(user);           
 
                 if (!(result > 0))
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student update process failed! Please check user details and try again." });
@@ -139,14 +142,14 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = _studentServices.ExistUserByName(model.username);
+                var userExists = _unitOfWork.Student.ExistUserByName(model.username);
 
                 if (userExists.Result == null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
 
                 ApplicationUser user = await userExists;
 
-                var result = await _studentServices.ChangePassword(user, model.CurrentPasssword, model.NewPassword);
+                var result = await _unitOfWork.Student.ChangePassword(user, model.CurrentPasssword, model.NewPassword);
 
                 if (!result)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Update password process is failed! Please check user details and try again." });
@@ -176,7 +179,7 @@ namespace StudManager.Controllers.Students
 
             try
             {       
-                result =  _studentServices.GetAllStudents();
+                result =  _unitOfWork.Student.GetAllStudents();
 
                 if (result.Count == 0)
                     return Ok(new ResponseModel { Status = "Success", Message = "There is no students for now!" });
@@ -206,7 +209,7 @@ namespace StudManager.Controllers.Students
 
             try
             {
-                var userExists = _studentServices.GetStudent(id);
+                var userExists = _unitOfWork.Student.GetStudent(id);
 
                 if (userExists == null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using StudManager.Data.Context;
 using StudManager.Data.Data.Entities;
@@ -11,6 +12,7 @@ namespace StudManager.Data.Services
 {
     public class CourseServices : GenericService<Course>, ICourseService
     {
+       
 
         public CourseServices(DBContext context, ILogger logger) : base(context, logger)
         {

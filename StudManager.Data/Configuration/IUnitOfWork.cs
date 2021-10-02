@@ -8,6 +8,8 @@ namespace StudManager.Data.Configuration
         ICourseService Courses { get; }
         IFeesServices Fees { get; }
         IStudentServices Student { get; }
+
+        IAdminService Admin { get; }
         Task CompleteAsync();
     }
 }

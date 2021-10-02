@@ -46,7 +46,7 @@ namespace StudManager
 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IStudentServices, StudentServices>();
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -117,7 +117,6 @@ namespace StudManager
                 c.DocExpansion(DocExpansion.None);
             });
 
-            //app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             app.UseDefaultFiles();
 
             var option = new RewriteOptions();

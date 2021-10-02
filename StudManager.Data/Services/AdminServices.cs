@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using StudManager.Data.Context;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
 using System;
@@ -8,15 +10,16 @@ using System.Threading.Tasks;
 
 namespace StudManager.Data.Services
 {
-    public class AdminServices : IAdminService
+    public class AdminServices : GenericService<ApplicationUser>, IAdminService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AdminServices(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminServices(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, DBContext context, ILogger logger) : base(context, logger)
         {
             _roleManager = roleManager;
             _userManager = userManager;
+            _context = context;
         }
 
         public async Task<bool> CreateManagementUser(ApplicationUser user, string password)
