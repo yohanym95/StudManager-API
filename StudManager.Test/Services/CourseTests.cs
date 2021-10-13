@@ -18,13 +18,14 @@ namespace StudManager.Test.Services
     public class CourseTests
     {
         public Mock<IUnitOfWork> mock = new Mock<IUnitOfWork>();
+        public Mock<ILogger<CourseController>> mockIlogger = new Mock<ILogger<CourseController>>();
+        public Mock<IMapper> mockIMapper = new Mock<IMapper>();
 
 
         [Fact]
         public void CheckAddCourse()
         {
-            var mockIlogger = new Mock<ILogger<CourseController>>();
-            var mockIMapper = new Mock<IMapper>();
+            
 
             var moqCourse = new CourseModel
             {
@@ -60,8 +61,7 @@ namespace StudManager.Test.Services
         [Fact]
         public void CheckGetCourse()
         {
-            var mockIlogger = new Mock<ILogger<CourseController>>();
-            var mockIMapper = new Mock<IMapper>();
+          
 
             List<Course> courseList = new List<Course>();
 
@@ -97,8 +97,7 @@ namespace StudManager.Test.Services
         [Fact]
         public void CheckGetCourseById()
         {
-            var mockIlogger = new Mock<ILogger<CourseController>>();
-            var mockIMapper = new Mock<IMapper>();
+            
 
 
             var moqCoure = new Course
@@ -113,7 +112,7 @@ namespace StudManager.Test.Services
 
             CourseController courseController = new CourseController(mockIlogger.Object, mock.Object, mockIMapper.Object);
 
-            var result = courseController.GetCourse(5);
+            var result = courseController.GetCourse(1);
 
             var okResult = result.Result as OkObjectResult;
 
@@ -126,8 +125,7 @@ namespace StudManager.Test.Services
         [Fact]
         public void CheckCourseUpdate()
         {
-            var mockIlogger = new Mock<ILogger<CourseController>>();
-            var mockIMapper = new Mock<IMapper>();
+            
 
             var moqCoure = new Course
             {
@@ -167,8 +165,7 @@ namespace StudManager.Test.Services
         [Fact]
         public void CheckCourseDelete()
         {
-            var mockIlogger = new Mock<ILogger<CourseController>>();
-            var mockIMapper = new Mock<IMapper>();
+            
             var moqCoure = new Course
             {
                 Id = 1,

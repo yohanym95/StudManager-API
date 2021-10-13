@@ -60,16 +60,17 @@ namespace StudManager.Controllers.Fee
 
                 var student = await _unitOfWork.Student.GetStudent(fees.StuId);
 
-                var feesModel = new FeesViewModel();
-
-                feesModel.Id = fees.Id;
-                feesModel.FeesType = fees.FeesType;
-                feesModel.FeesDescription = fees.FeesDescription;
-                feesModel.AmountofFees = fees.AmountofFees;
-                feesModel.RecieptNo = fees.RecieptNo;
-                feesModel.studName = student.FullName;
-                feesModel.StuId = fees.StuId;
-                feesModel.studRegNo = student.StudRegNo;
+                var feesModel = new FeesViewModel
+                {
+                    Id = fees.Id,
+                    FeesType = fees.FeesType,
+                    FeesDescription = fees.FeesDescription,
+                    AmountofFees = fees.AmountofFees,
+                    RecieptNo = fees.RecieptNo,
+                    studName = student.FullName,
+                    StuId = fees.StuId,
+                    studRegNo = student.StudRegNo
+                };
 
                 return Ok(feesModel);
 

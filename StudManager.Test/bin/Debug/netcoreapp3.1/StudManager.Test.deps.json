@@ -802,6 +802,7 @@
           }
         }
       },
+      "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.10.9": {},
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -1917,6 +1918,7 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.6",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "3.1.15",
           "Microsoft.EntityFrameworkCore.SqlServer": "5.0.6",
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.10.9",
           "StudManager.Data": "1.0.0",
           "Swashbuckle.AspNetCore": "6.1.4",
           "Swashbuckle.AspNetCore.Annotations": "6.1.4",
@@ -2311,6 +2313,13 @@
       "sha512": "sha512-mv7MnBDtqwQAjoH+AphE+Tu0dsF6x/c7Zs8umkb2McbvNALJdfBuWJQbiXGWqhNq7k8eMmnkNO6klJz4pkgekw==",
       "path": "microsoft.testplatform.testhost/16.7.1",
       "hashPath": "microsoft.testplatform.testhost.16.7.1.nupkg.sha512"
+    },
+    "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.10.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Sug+YeP9YYigFnUdvPCUJjBz7cc2VVR7UBZkIRwPWmVR/HmIM5HbcpX940s4BM3xgL3QHGp3qN7AqkcZ/MjZEw==",
+      "path": "microsoft.visualstudio.azure.containers.tools.targets/1.10.9",
+      "hashPath": "microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512"
     },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",
