@@ -46,7 +46,7 @@ namespace StudManager
 
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IStudentServices, StudentServices>();
+            services.AddScoped<IAuthenticateService, AuthenticateService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -96,6 +96,7 @@ namespace StudManager
 
             });
 
+            services.AddCors();
             services.AddMvc().AddNewtonsoftJson(CFG => CFG.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddControllers();
         }
@@ -116,7 +117,6 @@ namespace StudManager
                 c.DocExpansion(DocExpansion.None);
             });
 
-            //app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
             app.UseDefaultFiles();
 
             var option = new RewriteOptions();
@@ -126,7 +126,7 @@ namespace StudManager
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(option => option.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200"));
             app.UseAuthentication();
             app.UseAuthorization();
 
