@@ -95,11 +95,6 @@ namespace StudManager
                 });
 
             });
-            services.AddCors(o => o.AddPolicy("ReactPolicy", builder =>
-            {
-                builder.AllowAnyHeader()
-                       .AllowAnyMethod().WithOrigins("https://localhost:");
-            }));
 
             services.AddCors();
             services.AddMvc().AddNewtonsoftJson(CFG => CFG.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);

@@ -92,9 +92,9 @@ namespace StudManager.Controllers.Students
         {
             try
             {
-                var userExists = _unitOfWork.Student.ExistUserById(id);
+                var userExists = await _unitOfWork.Student.ExistUserById(id);
 
-                if (userExists.Result == null)
+                if (userExists == null)
                     return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
 
                 ApplicationUser user = new ApplicationUser()
