@@ -1,10 +1,11 @@
-﻿using System;
+﻿using StudManager.Data.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace StudManager.Data.Services
 {
-    interface ISubjectService
+    public interface ISubjectService : IGenericService<Subject>
     {
     }
 }
