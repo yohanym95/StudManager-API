@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using StudManager.Controllers.Courses;
 using StudManager.Data.Configuration;
 using StudManager.Data.Data.Entities;
-using AutoMapper;
 using Xunit;
 using StudManager.Data.Models;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace StudManager.Test.Services
 {
