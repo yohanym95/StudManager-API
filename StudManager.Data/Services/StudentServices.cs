@@ -100,7 +100,7 @@ namespace StudManager.Data.Services
 
         public async Task<ApplicationUser> GetStudent(string id)
         {
-            var userExist = _context.Users.Include(u => u.Student).Where(s => s.UserType == "Student" && s.Id == id).FirstOrDefault();
+            var userExist = await _context.Users.Include(u => u.Student).Where(s => s.UserType == "Student" && s.Id == id).FirstOrDefaultAsync();
 
             return userExist;
         }
