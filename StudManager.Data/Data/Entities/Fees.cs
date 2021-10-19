@@ -13,8 +13,11 @@ namespace StudManager.Data.Data.Entities
         public string RecieptNo { get; set; }
         public string FeesDescription { get; set; }
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-        [ForeignKey("Student")]
         public int StuId { get; set; }
+        public virtual Student Student { get; set; }
+        
+        public int CourseId { get; set; }
+        public virtual Course Course { get; set; }
 
 
     }

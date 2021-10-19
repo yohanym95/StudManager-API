@@ -17,7 +17,9 @@ namespace StudManager.Data.Data.Entities
         public virtual ApplicationUser ApplicationUser { get; set; }
         [ForeignKey("Course")]
         public int CourseId { get; set; }
-        public IList<StudentExam> StudentExams { get; set; }
+        public virtual Course Course { get; set; }
+
+        public virtual Fees Fees { get; set; }
 
 
     }

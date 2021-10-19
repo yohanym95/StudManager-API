@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using StudManager.Data.Configuration;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
 using StudManager.Data.Models;
-using StudManager.Data.Services;
-using Swashbuckle.AspNetCore.Annotations;
-using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
