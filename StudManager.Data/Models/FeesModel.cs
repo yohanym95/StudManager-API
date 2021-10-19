@@ -12,5 +12,6 @@ namespace StudManager.Data.Models
         public string RecieptNo { get; set; }
         public string FeesDescription { get; set; }
         public int StuId { get; set; }
+        public int CourseId { get; set; }
     }
 }

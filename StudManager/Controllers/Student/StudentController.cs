@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using StudManager.Data.Configuration;
 using StudManager.Data.Data.Entities;
 using StudManager.Data.Data.Roles;
 using StudManager.Data.Models;
-using StudManager.Data.Services;
-using Swashbuckle.AspNetCore.Annotations;
-using Swashbuckle.Swagger.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,7 +29,6 @@ namespace StudManager.Controllers.Students
         /// <response code="401">Unauthorized access</response>
         [SwaggerOperation(Summary = "This endpoint use for create account to student")]
         [HttpPost]
-        [Route("register")]
         [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
@@ -62,10 +57,10 @@ namespace StudManager.Controllers.Students
                     }
 
                 };
-                //var result = await _unitOfWork.Student.CreateStudent(user, model.Password);
+                var result = await _unitOfWork.Student.CreateStudent(user, model.Password);
                 
-                //if (!result)
-                //    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student creation failed! Please check user details and try again." });
+                if (!result)
+                   return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student creation failed! Please check user details and try again." });
             }
             catch (Exception e)
             {
@@ -85,7 +80,6 @@ namespace StudManager.Controllers.Students
         /// <response code="401">Unauthorized access</response>
         [SwaggerOperation(Summary = "This endpoint use for update student account")]
         [HttpPut]
-        [Route("update")]
         [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> Update([FromBody] RegisterModel model, string id)
         {
@@ -133,9 +127,9 @@ namespace StudManager.Controllers.Students
         ///     update student password
         /// </summary>
         /// <response code="401">Unauthorized access</response>
-        [SwaggerOperation(Summary = "This endpoint use for update student account")]
+        [SwaggerOperation(Summary = "This endpoint use for update the password of student account")]
         [HttpPut]
-        [Route("update/password")]
+        [Route("/password")]
         [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> UpdatePassword([FromBody] PasswordModel model)
         {
@@ -171,7 +165,6 @@ namespace StudManager.Controllers.Students
         /// <response code="401">Unauthorized access</response>
         [SwaggerOperation(Summary = "This endpoint use for get all students")]
         [HttpGet]
-        [Route("all")]
         [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> Get()
         {
@@ -200,8 +193,7 @@ namespace StudManager.Controllers.Students
         /// </summary>
         /// <response code="401">Unauthorized access</response>
         [SwaggerOperation(Summary = "This endpoint use for get student details")]
-        [HttpGet]
-        [Route("")]
+        [HttpGet("{id}")]
         [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> GetStudent(string id)
         {

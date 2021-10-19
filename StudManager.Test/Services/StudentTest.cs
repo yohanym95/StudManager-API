@@ -58,7 +58,7 @@ namespace StudManager.Test.Services
 
             mock.Setup(s => s.Student.ExistUserByName(It.IsAny<string>())).ReturnsAsync((ApplicationUser)null);
 
-            mock.Setup(s => s.Student.CreateStudent(user, registerModel.Password)).ReturnsAsync(true);
+            mock.Setup(s => s.Student.CreateStudent(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(true);
 
             StudentController studentController = new StudentController(mock.Object);
 

@@ -276,27 +276,6 @@ namespace StudManager.Data.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("StudManager.Data.Data.Entities.Exam", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ExamDescription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExamName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExamResult")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Exams");
-                });
-
             modelBuilder.Entity("StudManager.Data.Data.Entities.Fees", b =>
                 {
                     b.Property<int>("Id")
@@ -306,6 +285,12 @@ namespace StudManager.Data.Migrations
 
                     b.Property<string>("AmountofFees")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CourseId1")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -324,6 +309,16 @@ namespace StudManager.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId")
+                        .IsUnique();
+
+                    b.HasIndex("CourseId1")
+                        .IsUnique()
+                        .HasFilter("[CourseId1] IS NOT NULL");
+
+                    b.HasIndex("StuId")
+                        .IsUnique();
+
                     b.ToTable("Fees");
                 });
 
@@ -340,6 +335,9 @@ namespace StudManager.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("FeesId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
@@ -351,6 +349,10 @@ namespace StudManager.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("FeesId");
+
                     b.HasIndex("UserId")
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
@@ -358,19 +360,30 @@ namespace StudManager.Data.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("StudManager.Data.Data.Entities.StudentExam", b =>
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Subject", b =>
                 {
-                    b.Property<int>("ExamId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int>("Credit")
                         .HasColumnType("int");
 
-                    b.HasKey("ExamId", "StudentId");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("StudentId");
+                    b.Property<string>("SubjectDescription")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("StudentExams");
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -433,32 +446,61 @@ namespace StudManager.Data.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Fees", b =>
+                {
+                    b.HasOne("StudManager.Data.Data.Entities.Course", "Course")
+                        .WithOne()
+                        .HasForeignKey("StudManager.Data.Data.Entities.Fees", "CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("StudManager.Data.Data.Entities.Course", null)
+                        .WithOne("Fees")
+                        .HasForeignKey("StudManager.Data.Data.Entities.Fees", "CourseId1");
+
+                    b.HasOne("StudManager.Data.Data.Entities.Student", "Student")
+                        .WithOne()
+                        .HasForeignKey("StudManager.Data.Data.Entities.Fees", "StuId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("StudManager.Data.Data.Entities.Student", b =>
                 {
+                    b.HasOne("StudManager.Data.Data.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudManager.Data.Data.Entities.Fees", "Fees")
+                        .WithMany()
+                        .HasForeignKey("FeesId");
+
                     b.HasOne("StudManager.Data.Data.Entities.ApplicationUser", "ApplicationUser")
                         .WithOne("Student")
                         .HasForeignKey("StudManager.Data.Data.Entities.Student", "UserId");
 
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Fees");
                 });
 
-            modelBuilder.Entity("StudManager.Data.Data.Entities.StudentExam", b =>
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Subject", b =>
                 {
-                    b.HasOne("StudManager.Data.Data.Entities.Exam", "Exam")
-                        .WithMany("StudentExams")
-                        .HasForeignKey("ExamId")
+                    b.HasOne("StudManager.Data.Data.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StudManager.Data.Data.Entities.Student", "Student")
-                        .WithMany("StudentExams")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Exam");
-
-                    b.Navigation("Student");
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("StudManager.Data.Data.Entities.ApplicationUser", b =>
@@ -468,14 +510,9 @@ namespace StudManager.Data.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("StudManager.Data.Data.Entities.Exam", b =>
+            modelBuilder.Entity("StudManager.Data.Data.Entities.Course", b =>
                 {
-                    b.Navigation("StudentExams");
-                });
-
-            modelBuilder.Entity("StudManager.Data.Data.Entities.Student", b =>
-                {
-                    b.Navigation("StudentExams");
+                    b.Navigation("Fees");
                 });
 #pragma warning restore 612, 618
         }

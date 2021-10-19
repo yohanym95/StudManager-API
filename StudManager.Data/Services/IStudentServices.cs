@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StudManager.Data.Services
 {
-    public interface IStudentServices
+    public interface IStudentServices 
     {
         Task<bool> CreateStudent(ApplicationUser user, string password);
         Task<ApplicationUser> ExistUserByName(string userName);

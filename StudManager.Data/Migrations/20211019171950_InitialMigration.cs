@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace StudManager.Data.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,39 +63,6 @@ namespace StudManager.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Exams",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExamDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExamName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExamResult = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exams", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Fees",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FeesType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AmountofFees = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RecieptNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FeesDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StuId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Fees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -227,6 +194,28 @@ namespace StudManager.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subjects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SubjectDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Credit = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Subjects_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
@@ -236,7 +225,8 @@ namespace StudManager.Data.Migrations
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CourseId = table.Column<int>(type: "int", nullable: false)
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    FeesId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -247,30 +237,50 @@ namespace StudManager.Data.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Students_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudentExams",
+                name: "Fees",
                 columns: table => new
                 {
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    ExamId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FeesType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AmountofFees = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RecieptNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FeesDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StuId = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    CourseId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentExams", x => new { x.ExamId, x.StudentId });
+                    table.PrimaryKey("PK_Fees", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentExams_Exams_ExamId",
-                        column: x => x.ExamId,
-                        principalTable: "Exams",
+                        name: "FK_Fees_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentExams_Students_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_Fees_Courses_CourseId1",
+                        column: x => x.CourseId1,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Fees_Students_StuId",
+                        column: x => x.StuId,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -320,9 +330,33 @@ namespace StudManager.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentExams_StudentId",
-                table: "StudentExams",
-                column: "StudentId");
+                name: "IX_Fees_CourseId",
+                table: "Fees",
+                column: "CourseId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fees_CourseId1",
+                table: "Fees",
+                column: "CourseId1",
+                unique: true,
+                filter: "[CourseId1] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fees_StuId",
+                table: "Fees",
+                column: "StuId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_CourseId",
+                table: "Students",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_FeesId",
+                table: "Students",
+                column: "FeesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_UserId",
@@ -330,10 +364,43 @@ namespace StudManager.Data.Migrations
                 column: "UserId",
                 unique: true,
                 filter: "[UserId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subjects_CourseId",
+                table: "Subjects",
+                column: "CourseId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Students_Fees_FeesId",
+                table: "Students",
+                column: "FeesId",
+                principalTable: "Fees",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Students_AspNetUsers_UserId",
+                table: "Students");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Fees_Courses_CourseId",
+                table: "Fees");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Fees_Courses_CourseId1",
+                table: "Fees");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Students_Courses_CourseId",
+                table: "Students");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Fees_Students_StuId",
+                table: "Fees");
+
             migrationBuilder.DropTable(
                 name: "Admin");
 
@@ -353,25 +420,22 @@ namespace StudManager.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Courses");
-
-            migrationBuilder.DropTable(
-                name: "Fees");
-
-            migrationBuilder.DropTable(
-                name: "StudentExams");
+                name: "Subjects");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Exams");
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Students");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Fees");
         }
     }
 }

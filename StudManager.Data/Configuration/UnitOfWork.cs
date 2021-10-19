@@ -23,6 +23,8 @@ namespace StudManager.Data.Configuration
         public IStudentServices Student { get; private set; }
         public  IAdminService Admin { get; private set; }
 
+        public ISubjectService Subject { get; private set; }
+
         public UnitOfWork(DBContext context, ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
@@ -32,6 +34,7 @@ namespace StudManager.Data.Configuration
 
             Courses = new CourseServices(context, _logger);
             Fees = new FeesServices(context, _logger);
+            Subject = new SubjectService(context, _logger);
             Student = new StudentServices(_userManager, _roleManager, context, _logger);
             Admin = new AdminServices(_userManager, _roleManager, context, _logger);
        }

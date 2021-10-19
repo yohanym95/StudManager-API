@@ -9,6 +9,7 @@ namespace StudManager.Data.Configuration
         IFeesServices Fees { get; }
         IStudentServices Student { get; }
 
+        ISubjectService Subject { get; }
         IAdminService Admin { get; }
         Task CompleteAsync();
     }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace StudManager.Data.Data.Entities
 {
@@ -17,7 +14,8 @@ namespace StudManager.Data.Data.Entities
         public virtual ApplicationUser ApplicationUser { get; set; }
         [ForeignKey("Course")]
         public int CourseId { get; set; }
-        public IList<StudentExam> StudentExams { get; set; }
+        public virtual Course Course { get; set; }
+        public virtual Fees Fees { get; set; }
 
 
     }
