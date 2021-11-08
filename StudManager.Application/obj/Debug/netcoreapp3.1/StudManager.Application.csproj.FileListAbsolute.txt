@@ -1,0 +1,14 @@
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\bin\Debug\netcoreapp3.1\StudManager.Application.deps.json
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\bin\Debug\netcoreapp3.1\StudManager.Application.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\bin\Debug\netcoreapp3.1\StudManager.Application.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\bin\Debug\netcoreapp3.1\StudManager.Core.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\bin\Debug\netcoreapp3.1\StudManager.Infrastructure.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\bin\Debug\netcoreapp3.1\StudManager.Core.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\bin\Debug\netcoreapp3.1\StudManager.Infrastructure.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\obj\Debug\netcoreapp3.1\StudManager.Application.csprojAssemblyReference.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\obj\Debug\netcoreapp3.1\StudManager.Application.AssemblyInfoInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\obj\Debug\netcoreapp3.1\StudManager.Application.AssemblyInfo.cs
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\obj\Debug\netcoreapp3.1\StudManager.Application.csproj.CoreCompileInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\obj\Debug\netcoreapp3.1\StudManager.Application.csproj.CopyComplete
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\obj\Debug\netcoreapp3.1\StudManager.Application.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Application\obj\Debug\netcoreapp3.1\StudManager.Application.pdb

@@ -1,3 +1,7 @@
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.csprojAssemblyReference.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.AssemblyInfoInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.AssemblyInfo.cs
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.csproj.CoreCompileInputs.cache
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\testhost.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\appsettings.json
@@ -14,6 +18,8 @@ C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netc
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\MediatR.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\MediatR.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\System.Web.Http.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
@@ -151,14 +157,14 @@ C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netc
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.Data.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.Application.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.Core.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.dll
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.Data.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.Infrastructure.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.pdb
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.csprojAssemblyReference.cache
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.AssemblyInfoInputs.cache
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.AssemblyInfo.cs
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.csproj.CoreCompileInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.Application.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.Core.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\bin\Debug\netcoreapp3.1\StudManager.Infrastructure.pdb
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.csproj.CopyComplete
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Test\obj\Debug\netcoreapp3.1\StudManager.Test.pdb

@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,12 +10,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
-using StudManager.Data.Configuration;
-using StudManager.Data.Context;
-using StudManager.Data.Data.Entities;
-using StudManager.Data.Services;
+using StudManager.Application.Handlers.Authenticate;
+using StudManager.Core.Configuration;
+using StudManager.Core.Entities;
+using StudManager.Core.Repositories;
+using StudManager.Infrastructure.Configuration;
+using StudManager.Infrastructure.Data;
+using StudManager.Infrastructure.Repositories;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System;
+using System.Reflection;
 using System.Text;
 
 namespace StudManager
@@ -45,10 +50,15 @@ namespace StudManager
             });
 
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAuthenticateService, AuthenticateService>();
+            
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthenticateService, AuthenticateServices>();
+            services.AddScoped<IAdminServices, AdminServices>();
+
+            services.AddMediatR(AppDomain.CurrentDomain.Load("StudManager.Application"));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
             services.AddAuthentication()
                 .AddCookie()
@@ -136,6 +146,8 @@ namespace StudManager
                     "{controller}/{action}/{id?}",
                     new { controller = "App", action = "Index" });
             });
+
+         
         }
     }
 }

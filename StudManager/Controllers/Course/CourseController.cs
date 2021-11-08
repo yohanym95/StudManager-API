@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using StudManager.Data.Configuration;
-using StudManager.Data.Data.Entities;
-using StudManager.Data.Data.Roles;
-using StudManager.Data.Models;
-using StudManager.Data.Services;
+using StudManager.Application.Commands.Courses;
+using StudManager.Application.Queries.Courses;
+using StudManager.Application.Responses.Courses;
+using StudManager.Core.Entities;
+using StudManager.Core.Roles;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace StudManager.Controllers.Courses
@@ -23,49 +22,34 @@ namespace StudManager.Controllers.Courses
     public class CourseController : ControllerBase
     {
         private readonly ILogger<CourseController> _logger;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public CourseController(ILogger<CourseController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public CourseController(ILogger<CourseController> logger, IMediator mediator)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
 
         [SwaggerOperation(Summary = "This endpoint use for get all courses")]
         [HttpGet]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> Get()
+        public async Task<IEnumerable<Course>> Get()
         {
-            try
-            {
-                var users = await _unitOfWork.Courses.All();
-                return Ok(users);
-
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
+            return await _mediator.Send(new GetAllCourseQuery());
         }
 
         [SwaggerOperation(Summary = "This endpoint use for get course details")]
         [HttpGet("{id}")]
         [Authorize(Roles = UserRoles.SuperAdmin)]
-        public async Task<IActionResult> GetCourse(int id)
+        public async Task<ActionResult<CourseResponse>> GetCourse(GetCourseQuery model)
         {
             try
             {
-                var item = await _unitOfWork.Courses.GetById(id);
+                var course = await _mediator.Send(model);
+                return Ok(course);
 
-                if (item == null)
-                    return NotFound();
-
-                return Ok(item);
-
-            }
+    }
             catch (Exception e)
             {
                 return BadRequest(e);
@@ -75,20 +59,14 @@ namespace StudManager.Controllers.Courses
         [SwaggerOperation(Summary = "This endpoint use for create course")]
         [HttpPost]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> Post([FromBody] CourseModel model)
+        public async Task<ActionResult<CourseResponse>> Post([FromBody] CourseCommand model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
 
-                    var course = _mapper.Map<CourseModel, Course>(model);
-
-                    await _unitOfWork.Courses.Add(course);
-                    await _unitOfWork.CompleteAsync();
-
-                    //return CreatedAtAction("GetItem", new { course.Id }, course);
-                    return Ok(course);
+                 return    await _mediator.Send(model);
                 }
                 else
                 {
@@ -104,19 +82,13 @@ namespace StudManager.Controllers.Courses
         [SwaggerOperation(Summary = "This endpoint use for update course")]
         [HttpPut]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> Update([FromBody] CourseModel model)
+        public async Task<ActionResult<CourseResponse>> Update([FromBody] CourseCommand model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-
-                    var course = _mapper.Map<CourseModel, Course>(model);
-
-                    await _unitOfWork.Courses.Upsert(course);
-                    await _unitOfWork.CompleteAsync();
-                    
-                    return Ok(course);
+                    return await _mediator.Send(model);
                 }
                 else
                 {
@@ -132,17 +104,23 @@ namespace StudManager.Controllers.Courses
         [SwaggerOperation(Summary = "This endpoint use for delete the specific course")]
         [HttpDelete("{id}")]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> DeleteItem(int id)
+        public async Task<ActionResult<DeleteCourseResponse>> DeleteItem(DeleteCourseCommand model)
         {
-            var item = await _unitOfWork.Courses.GetById(id);
-
-            if (item == null)
-                return BadRequest();
-
-            await _unitOfWork.Courses.Delete(id);
-            await _unitOfWork.CompleteAsync();
-
-            return Ok();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return await _mediator.Send(model);
+                }
+                else
+                {
+                    return BadRequest(ModelState);
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e);
+            }
         }
     }
 }

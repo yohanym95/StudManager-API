@@ -1,16 +1,12 @@
-﻿using AutoMapper;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using StudManager.Data.Configuration;
-using StudManager.Data.Data.Entities;
-using StudManager.Data.Data.Roles;
-using StudManager.Data.Models;
+using StudManager.Application.Commands.Subjects;
+using StudManager.Application.Queries.Subjects;
+using StudManager.Core.Roles;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StudManager.Controllers.Subjects
@@ -20,15 +16,11 @@ namespace StudManager.Controllers.Subjects
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SubjectController : Controller
     {
-        private readonly ILogger<SubjectController> _logger;
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public SubjectController(ILogger<SubjectController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        public SubjectController(IMediator mediator)
         {
-            _logger = logger;
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
+            _mediator = mediator;
         }
 
         [SwaggerOperation(Summary = "This endpoint use for get all subject with Details")]
@@ -38,7 +30,7 @@ namespace StudManager.Controllers.Subjects
         {
             try
             {
-                var subjects = await _unitOfWork.Subject.All();
+                var subjects = await _mediator.Send(new GetAllSubjectQuery());
                 return Ok(subjects);
 
             }
@@ -51,11 +43,11 @@ namespace StudManager.Controllers.Subjects
         [SwaggerOperation(Summary = "This endpoint use for get specific subject details")]
         [HttpGet("{id}")]
         [Authorize(Roles = UserRoles.SuperAdmin)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(GetSubjectQuery model)
         {
             try
             {
-                var subject = await _unitOfWork.Subject.GetById(id);
+                var subject = await _mediator.Send(model);
 
                 if (subject == null)
                     return NotFound();
@@ -72,19 +64,17 @@ namespace StudManager.Controllers.Subjects
         [SwaggerOperation(Summary = "This endpoint use for Add Subject")]
         [HttpPost]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> Post([FromBody] SubjectModel model)
+        public async Task<IActionResult> Post([FromBody] CreateSubjectCommand model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
 
-                    var subject = _mapper.Map<SubjectModel, Subject>(model);
 
-                    await _unitOfWork.Subject.Add(subject);
-                    await _unitOfWork.CompleteAsync();
+                    var result = await _mediator.Send(model);
 
-                    return Ok(subject);
+                    return Ok(result);
                 }
                 else
                 {
@@ -100,19 +90,15 @@ namespace StudManager.Controllers.Subjects
         [SwaggerOperation(Summary = "This endpoint use for update subject")]
         [HttpPut]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> Update([FromBody] SubjectModel model)
+        public async Task<IActionResult> Update([FromBody] UpdateSubjectCommand model)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    var result = await _mediator.Send(model);
 
-                    var subject = _mapper.Map<SubjectModel, Subject>(model);
-
-                    await _unitOfWork.Subject.Upsert(subject);
-                    await _unitOfWork.CompleteAsync();
-
-                    return Ok(subject);
+                    return Ok(result);
                 }
                 else
                 {

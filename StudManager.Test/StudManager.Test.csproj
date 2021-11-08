@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudManager.Data\StudManager.Data.csproj" />
     <ProjectReference Include="..\StudManager\StudManager.csproj" />
   </ItemGroup>
 

@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudManager.Data.Configuration;
-using StudManager.Data.Data.Entities;
-using StudManager.Data.Data.Roles;
-using StudManager.Data.Models;
+using StudManager.Application.Commands.Students;
+using StudManager.Application.Queries.Courses;
+using StudManager.Application.Queries.Students;
+using StudManager.Core.Roles;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using SwaggerOperationAttribute = Swashbuckle.AspNetCore.Annotations.SwaggerOperationAttribute;
 
@@ -17,10 +16,10 @@ namespace StudManager.Controllers.Students
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public StudentController(IUnitOfWork unitOfWork)
+        private readonly IMediator _mediator;
+        public StudentController(IMediator mediator)
         {
-            _unitOfWork = unitOfWork;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -30,49 +29,20 @@ namespace StudManager.Controllers.Students
         [SwaggerOperation(Summary = "This endpoint use for create account to student")]
         [HttpPost]
         [Authorize(Roles = UserRoles.Admin)]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterCommand model)
         {
             try
             {
-                var userExists = await _unitOfWork.Student.ExistUserByName(model.UserName);
+                var result = await _mediator.Send(model);
 
-                if (userExists != null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student already exists!" });
-
-                ApplicationUser user = new ApplicationUser()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    BirthDate = model.BirthDate,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    SecurityStamp = Guid.NewGuid().ToString(),
-                    UserName = model.UserName,
-                    UserType = model.UserType,
-                    Student = new Student
-                    {
-                        StudRegNo = model.StudentRegisterNo,
-                        FullName = model.FirstName + " " + model.LastName,
-                        CourseId = model.CourseId
-                    }
-
-                };
-                var result = await _unitOfWork.Student.CreateStudent(user, model.Password);
-                
-                if (!result)
-                   return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student creation failed! Please check user details and try again." });
+                return Ok(result);
             }
             catch (Exception e)
             {
                 return BadRequest(e);
             }
 
-
-            return Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
         }
-
-
-
 
         /// <summary>
         ///     update account for student
@@ -81,37 +51,12 @@ namespace StudManager.Controllers.Students
         [SwaggerOperation(Summary = "This endpoint use for update student account")]
         [HttpPut]
         [Authorize(Roles = UserRoles.User)]
-        public async Task<IActionResult> Update([FromBody] RegisterModel model, string id)
+        public async Task<IActionResult> Update([FromBody] UpdateCommand model)
         {
             try
             {
-                var userExists = await _unitOfWork.Student.ExistUserById(id);
-
-                if (userExists == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
-
-                ApplicationUser user = new ApplicationUser()
-                {
-                    Id = id,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    BirthDate = model.BirthDate,
-                    PhoneNumber = model.PhoneNumber,
-                    Email = model.Email,
-                    SecurityStamp = Guid.NewGuid().ToString(),
-                    UserName = model.UserName,
-                    UserType = "Student",
-                    Student = new Student
-                    {
-                        StudRegNo = model.StudentRegisterNo,
-                        FullName = model.FirstName + " " + model.LastName,
-                    }
-                };
-
-                var result = _unitOfWork.Student.UpdateStudent(user);
-
-                if (result < 0)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student update process failed! Please check user details and try again." });
+                var result = await _mediator.Send(model);
+                return Ok(result);
 
             }
             catch (Exception e)
@@ -119,8 +64,6 @@ namespace StudManager.Controllers.Students
                 return BadRequest(e);
             }
 
-
-            return Ok(new ResponseModel { Status = "Success", Message = "User updated successfully!" });
         }
 
         /// <summary>
@@ -131,23 +74,12 @@ namespace StudManager.Controllers.Students
         [HttpPut]
         [Route("/password")]
         [Authorize(Roles = UserRoles.User)]
-        public async Task<IActionResult> UpdatePassword([FromBody] PasswordModel model)
+        public async Task<IActionResult> UpdatePassword([FromBody] UpdatePasswordCommand model)
         {
             try
             {
-                var userExists = _unitOfWork.Student.ExistUserByName(model.username);
-
-                if (userExists.Result == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
-
-                ApplicationUser user = await userExists;
-
-                var result = await _unitOfWork.Student.ChangePassword(user, model.CurrentPasssword, model.NewPassword);
-
-                if (!result)
-                {
-                   return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Update password process is failed! Please check user details and try again." });
-                }                
+                var result = await _mediator.Send(model);
+                return Ok(result);
 
             }
             catch (Exception e)
@@ -155,8 +87,6 @@ namespace StudManager.Controllers.Students
                 return BadRequest(e);
             }
 
-
-            return Ok(new ResponseModel { Status = "Success", Message = "Password updated successfully!" });
         }
 
         /// <summary>
@@ -168,14 +98,12 @@ namespace StudManager.Controllers.Students
         [Authorize(Roles = UserRoles.User)]
         public async Task<IActionResult> Get()
         {
-            List<ApplicationUser> result;
+           
 
             try
-            {       
-                result =  _unitOfWork.Student.GetAllStudents();
-
-                if (result.Count == 0)
-                    return Ok(new ResponseModel { Status = "Success", Message = "There is no students for now!" });
+            {
+                var result = await _mediator.Send(new GetAllCourseQuery());
+                return Ok(result);
 
 
             }
@@ -184,8 +112,6 @@ namespace StudManager.Controllers.Students
                 return BadRequest(e);
             }
 
-
-            return Ok(result);
         }
 
         /// <summary>
@@ -195,18 +121,16 @@ namespace StudManager.Controllers.Students
         [SwaggerOperation(Summary = "This endpoint use for get student details")]
         [HttpGet("{id}")]
         [Authorize(Roles = UserRoles.User)]
-        public async Task<IActionResult> GetStudent(string id)
+        public async Task<IActionResult> GetStudent(GetStudentQuery model)
         {
-            ApplicationUser user;
 
             try
             {
-                var userExists = _unitOfWork.Student.GetStudent(id);
+                var result = await _mediator.Send(model);
+                if (result == null)
+                    return NotFound();
 
-                if (userExists == null)
-                    return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "Student is not registered!" });
-
-                 user = await userExists;
+                return Ok(result);
 
             }
             catch (Exception e)
@@ -214,8 +138,6 @@ namespace StudManager.Controllers.Students
                 return BadRequest(e);
             }
 
-
-            return Ok(user);
             }
 
 
