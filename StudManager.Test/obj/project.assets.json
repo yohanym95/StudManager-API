@@ -9143,6 +9143,7 @@
       "Microsoft.NET.Test.Sdk >= 16.7.1",
       "Moq >= 4.16.1",
       "StudManager >= 1.0.0",
+      "StudManager.Infrastructure >= 1.0.0",
       "coverlet.collector >= 1.3.0",
       "xunit >= 2.4.1",
       "xunit.runner.visualstudio >= 2.4.3"
@@ -9175,6 +9176,9 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
+            "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager.Infrastructure\\StudManager.Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager.Infrastructure\\StudManager.Infrastructure.csproj"
+            },
             "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager\\StudManager.csproj": {
               "projectPath": "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager\\StudManager.csproj"
             }

@@ -239,6 +239,9 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+              "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager.Infrastructure\\StudManager.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager.Infrastructure\\StudManager.Infrastructure.csproj"
+              },
               "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager\\StudManager.csproj": {
                 "projectPath": "C:\\Users\\Yohan Malshika\\source\\repos\\StudManager\\StudManager\\StudManager.csproj"
               }
