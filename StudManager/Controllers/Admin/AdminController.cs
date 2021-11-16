@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudManager.Data.Configuration;
-using StudManager.Data.Data.Entities;
-using StudManager.Data.Data.Roles;
-using StudManager.Data.Models;
-using StudManager.Data.Services;
+using StudManager.Application.Commands.Admin;
+using StudManager.Core.Roles;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
 using System.Threading.Tasks;
 
 namespace StudManager.Controllers.Admin
@@ -18,10 +13,10 @@ namespace StudManager.Controllers.Admin
     [ApiController]
     public class AdminController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public AdminController(IUnitOfWork unitOfWork)
+        private readonly IMediator _mediator;
+        public AdminController(IMediator mediator)
         {
-            _unitOfWork = unitOfWork;
+            _mediator = mediator;
         }
         /// <summary>
         ///     create account for management level user
@@ -30,29 +25,14 @@ namespace StudManager.Controllers.Admin
         [SwaggerOperation(Summary = "This endpoint use for create account to admin")]
         [HttpPost]
         [Authorize(Roles = UserRoles.SuperAdmin)]
-        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
+        public async Task<IActionResult> RegisterAdmin([FromBody] AdminRegisterCommand model)
         {
-            var userExists = await _unitOfWork.Admin.ExistUser(model.UserName);
-            if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User already exists!" });
+            var result = await _mediator.Send(model);
 
-            ApplicationUser user = new ApplicationUser()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                BirthDate = model.BirthDate,
-                PhoneNumber = model.PhoneNumber,
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName,
-                UserType = "Admin"
+            if (result.Status == "Error")
+                return BadRequest(result);
 
-            };
-            var result = await _unitOfWork.Admin.CreateManagementUser(user, model.Password);
-            if (!result)
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User creation failed! Please check user details and try again." });
-
-            return Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
+            return Ok(result);
         }
 
         /// <summary>
@@ -62,29 +42,14 @@ namespace StudManager.Controllers.Admin
         [SwaggerOperation(Summary = "This endpoint use for update the admin account")]
         [HttpPut]
         [Authorize(Roles = UserRoles.SuperAdmin)]
-        public async Task<IActionResult> Update([FromBody] RegisterModel model)
+        public async Task<IActionResult> Update([FromBody] UpdateAdminCommand model)
         {
-            var userExists = await _unitOfWork.Admin.ExistUser(model.UserName);
-            if (userExists == null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User is not registered!" });
+            var result = await _mediator.Send(model);
 
-            ApplicationUser user = new ApplicationUser()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                BirthDate = model.BirthDate,
-                PhoneNumber = model.PhoneNumber,
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName,
-                UserType = model.UserType
+            if (result.Status == "Error")
+                return BadRequest(result);
 
-            };
-            var result = await _unitOfWork.Admin.UpdateManagementUser(user);
-            if (!result)
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseModel { Status = "Error", Message = "User update process failed! Please check user details and try again." });
-
-            return Ok(new ResponseModel { Status = "Success", Message = "User updated successfully!" });
+            return Ok(result);
         }
 
     }

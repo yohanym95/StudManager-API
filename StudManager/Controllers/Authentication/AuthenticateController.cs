@@ -1,16 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using StudManager.Data.Data.Entities;
-using StudManager.Data.Models;
-using StudManager.Data.Services;
+using StudManager.Application.Commands.Authenticate;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StudManager.Controllers.Authentication
@@ -19,10 +10,10 @@ namespace StudManager.Controllers.Authentication
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        private readonly IAuthenticateService _authenticateService;
-        public AuthenticateController(IAuthenticateService authenticateService)
+        private readonly IMediator _mediator;
+        public AuthenticateController(IMediator mediator)
         {
-            _authenticateService = authenticateService;
+            _mediator = mediator;
         }
 
         /// <summary>
@@ -32,20 +23,14 @@ namespace StudManager.Controllers.Authentication
         [SwaggerOperation(Summary = "This endpoint use for login process by creating the token")]
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginModel model)
+        public async Task<IActionResult> Login([FromBody] LoginCommand model)
         {
 
             if (ModelState.IsValid)
             {
-                var result = await _authenticateService.userAuthenticate(model);
+                var result = await _mediator.Send(model);
 
-                var results = new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(result),
-                    expiration = result.ValidTo
-                };
-
-                return Created("", results);
+                return Created("", result);
             }
 
             return BadRequest();

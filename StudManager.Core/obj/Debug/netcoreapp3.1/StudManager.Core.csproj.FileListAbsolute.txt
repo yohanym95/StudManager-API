@@ -1,0 +1,9 @@
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\bin\Debug\netcoreapp3.1\StudManager.Core.deps.json
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\bin\Debug\netcoreapp3.1\StudManager.Core.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\bin\Debug\netcoreapp3.1\StudManager.Core.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\obj\Debug\netcoreapp3.1\StudManager.Core.csprojAssemblyReference.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\obj\Debug\netcoreapp3.1\StudManager.Core.AssemblyInfoInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\obj\Debug\netcoreapp3.1\StudManager.Core.AssemblyInfo.cs
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\obj\Debug\netcoreapp3.1\StudManager.Core.csproj.CoreCompileInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\obj\Debug\netcoreapp3.1\StudManager.Core.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager.Core\obj\Debug\netcoreapp3.1\StudManager.Core.pdb

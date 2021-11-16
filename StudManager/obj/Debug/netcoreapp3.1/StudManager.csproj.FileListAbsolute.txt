@@ -51,11 +51,6 @@ C:\Users\Yohan Malshika\source\repos\StudManager\obj\Debug\netcoreapp3.1\staticw
 C:\Users\Yohan Malshika\source\repos\StudManager\obj\Debug\netcoreapp3.1\staticwebassets\StudManager.StaticWebAssets.xml
 C:\Users\Yohan Malshika\source\repos\StudManager\obj\Debug\netcoreapp3.1\scopedcss\bundle\StudManager.styles.css
 C:\Users\Yohan Malshika\source\repos\StudManager\obj\Debug\netcoreapp3.1\StudManager.RazorTargetAssemblyInfo.cache
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.csprojAssemblyReference.cache
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.AssemblyInfoInputs.cache
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.AssemblyInfo.cs
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.csproj.CoreCompileInputs.cache
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.exe
@@ -67,6 +62,8 @@ C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreap
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\Humanizer.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\MediatR.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\MediatR.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\System.Web.Http.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
@@ -125,8 +122,18 @@ C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreap
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.Data.dll
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.Data.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.Application.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.Core.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.Infrastructure.dll
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.Application.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.Core.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\bin\Debug\netcoreapp3.1\StudManager.Infrastructure.pdb
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.csprojAssemblyReference.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.AssemblyInfoInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.AssemblyInfo.cs
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.csproj.CoreCompileInputs.cache
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\staticwebassets\StudManager.StaticWebAssets.Manifest.cache
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\staticwebassets\StudManager.StaticWebAssets.xml
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\scopedcss\bundle\StudManager.styles.css
@@ -135,4 +142,3 @@ C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreap
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.dll
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.pdb
 C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.genruntimeconfig.cache
-C:\Users\Yohan Malshika\source\repos\StudManager\StudManager\obj\Debug\netcoreapp3.1\StudManager.MvcApplicationPartsAssemblyInfo.cs
