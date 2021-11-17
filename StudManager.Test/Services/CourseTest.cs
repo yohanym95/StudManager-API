@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using StudManager.Core.Entities;
 using StudManager.Infrastructure.Data;
 using StudManager.Infrastructure.Repositories;
-using StudManager.Test.Context;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;

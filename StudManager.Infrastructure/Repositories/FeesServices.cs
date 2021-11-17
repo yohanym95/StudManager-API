@@ -59,9 +59,6 @@ namespace StudManager.Infrastructure.Repositories
 
                 if (fees == null) return null;
 
-
-
-
                 return fees;
 
             }
